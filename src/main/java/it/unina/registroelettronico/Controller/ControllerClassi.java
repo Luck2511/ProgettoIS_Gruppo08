@@ -47,7 +47,7 @@ public class ControllerClassi {
         classeCreata=new InfoClasseDTO(nomeClasse,codice);
 
         //memorizzazione classe (e registro) e gestione persistenza
-        //TODO FARE QUESTA PARTE
+        //TODO FARE QUESTA PARTE speriamo bene
 
         //in caso di errori nella memorizzazione o nella persistenza fare qui un return false
 
