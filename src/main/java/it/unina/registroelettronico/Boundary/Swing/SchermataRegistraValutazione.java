@@ -1,4 +1,4 @@
-package it.unina.registroelettronico.Boundary;
+package it.unina.registroelettronico.Boundary.Swing;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
