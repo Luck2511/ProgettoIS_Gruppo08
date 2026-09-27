@@ -35,7 +35,7 @@ public class Main {
             /*SchermataDocente schermataDocente =
                     new SchermataDocente();
             */
-
+            //Prova commmit
             SchermataIniziale schermataIniziale=new SchermataIniziale();
             frame.setContentPane(
                     schermataIniziale.getContentPane()
