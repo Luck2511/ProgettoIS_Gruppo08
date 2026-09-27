@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#F3EEFF"/>
+    </linearGradient>
+    <linearGradient id="purple" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9A72FF"/>
+      <stop offset="1" stop-color="#6546D7"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFD76A"/>
+      <stop offset="1" stop-color="#FFB23E"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="50" y="29" width="124" height="164" rx="22" fill="url(#paper)" stroke="#7256D9" stroke-width="7"/>
+    <circle cx="87" cy="77" r="19" fill="url(#purple)"/>
+    <path d="M64 116c3-24 13-35 23-35s20 11 23 35" fill="url(#purple)" stroke="none"/>
+    <path d="M122 70h29M122 94h24M73 143h70M73 168h53" stroke="#B5A7EB" stroke-width="9"/>
+    <circle cx="171" cy="162" r="37" fill="url(#gold)" stroke="#FFFFFF" stroke-width="5"/>
+    <path d="M171 141l6 13 15 2-11 10 3 15-13-7-13 7 3-15-11-10 15-2z" fill="#FFFFFF" stroke="none"/>
+  </g>
+</svg>

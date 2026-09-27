@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+  <defs>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#EEF7FF"/>
+    </linearGradient>
+    <linearGradient id="teal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5FE0D0"/>
+      <stop offset="1" stop-color="#1FA89E"/>
+    </linearGradient>
+    <linearGradient id="coral" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF8E8E"/>
+      <stop offset="1" stop-color="#FF5B72"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="36" y="38" width="168" height="138" rx="24" fill="url(#card)" stroke="#1FA89E" stroke-width="7"/>
+    <path d="M64 151V84M99 151V112M134 151V95M169 151V70" stroke="url(#teal)" stroke-width="16"/>
+    <path d="M63 93l36 22 35-16 35-28" stroke="url(#coral)" stroke-width="8"/>
+    <circle cx="63" cy="93" r="6" fill="#FF6E80"/>
+    <circle cx="99" cy="115" r="6" fill="#FF6E80"/>
+    <circle cx="134" cy="99" r="6" fill="#FF6E80"/>
+    <circle cx="169" cy="71" r="6" fill="#FF6E80"/>
+    <circle cx="180" cy="179" r="30" fill="#2F80ED" stroke="#FFFFFF" stroke-width="5"/>
+    <path d="M168 179h24M180 167v24" stroke="#FFFFFF" stroke-width="9"/>
+  </g>
+</svg>

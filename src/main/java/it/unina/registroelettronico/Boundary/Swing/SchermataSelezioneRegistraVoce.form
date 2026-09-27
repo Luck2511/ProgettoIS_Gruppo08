@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="it.unina.registroelettronico.Boundary.SchermataSelezioneRegistraVoce">
+  <grid id="27dc6" binding="contentPane" layout-manager="GridLayoutManager" row-count="6" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="0" vgap="14">
+    <margin top="28" left="30" bottom="28" right="30"/>
+    <constraints>
+      <xy x="20" y="20" width="980" height="760"/>
+    </constraints>
+    <properties>
+      <background color="-1116929"/>
+      <opaque value="true"/>
+      <preferredSize width="980" height="760"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <component id="1a2b3c" class="javax.swing.JLabel" binding="lblHeader">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1"/>
+          <font size="13" style="0"/>
+          <foreground color="-14730405"/>
+          <horizontalAlignment value="0"/>
+          <opaque value="true"/>
+          <preferredSize width="820" height="92"/>
+          <text value="&lt;html&gt;&lt;div style='text-align:center;'&gt;&lt;b&gt;&lt;font size='+4' color='#193B63'&gt;Registra voce&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;font color='#667788'&gt;Seleziona il tipo di voce da registrare nel registro di classe.&lt;/font&gt;&lt;/div&gt;&lt;/html&gt;"/>
+          <verticalAlignment value="0"/>
+        </properties>
+      </component>
+      <vspacer id="3c4d5e">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <component id="4d5e6f" class="javax.swing.JButton" binding="cardCompito">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1"/>
+          <focusPainted value="false"/>
+          <font size="15" style="0"/>
+          <foreground color="-14730405"/>
+          <horizontalAlignment value="0"/>
+          <horizontalTextPosition value="2"/>
+          <iconTextGap value="52"/>
+          <opaque value="true"/>
+          <preferredSize width="820" height="132"/>
+          <text value="&lt;html&gt;&lt;div style='width:440px;'&gt;&lt;b&gt;&lt;font size='+2' color='#2F80ED'&gt;Registra Compito&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;font color='#667788'&gt;Aggiungi un compito con titolo, descrizione, assegnazione e scadenza.&lt;/font&gt;&lt;/div&gt;&lt;/html&gt;"/>
+          <verticalAlignment value="0"/>
+          <verticalTextPosition value="0"/>
+        </properties>
+      </component>
+      <component id="5e6f70" class="javax.swing.JButton" binding="cardValutazione">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1"/>
+          <focusPainted value="false"/>
+          <font size="15" style="0"/>
+          <foreground color="-14730405"/>
+          <horizontalAlignment value="0"/>
+          <horizontalTextPosition value="2"/>
+          <iconTextGap value="52"/>
+          <opaque value="true"/>
+          <preferredSize width="820" height="132"/>
+          <text value="&lt;html&gt;&lt;div style='width:440px;'&gt;&lt;b&gt;&lt;font size='+2' color='#2F80ED'&gt;Registra Valutazione&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;font color='#667788'&gt;Assegna una valutazione scegliendo tipologia, studente, voto e nota.&lt;/font&gt;&lt;/div&gt;&lt;/html&gt;"/>
+          <verticalAlignment value="0"/>
+          <verticalTextPosition value="0"/>
+        </properties>
+      </component>
+      <component id="6f7081" class="javax.swing.JButton" binding="cardLezione">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1"/>
+          <focusPainted value="false"/>
+          <font size="15" style="0"/>
+          <foreground color="-14730405"/>
+          <horizontalAlignment value="0"/>
+          <horizontalTextPosition value="2"/>
+          <iconTextGap value="52"/>
+          <opaque value="true"/>
+          <preferredSize width="820" height="132"/>
+          <text value="&lt;html&gt;&lt;div style='width:440px;'&gt;&lt;b&gt;&lt;font size='+2' color='#2F80ED'&gt;Registra Lezione&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;font color='#667788'&gt;Registra una lezione con argomento, descrizione e data di svolgimento.&lt;/font&gt;&lt;/div&gt;&lt;/html&gt;"/>
+          <verticalAlignment value="0"/>
+          <verticalTextPosition value="0"/>
+        </properties>
+      </component>
+      <vspacer id="708192">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+    </children>
+  </grid>
+</form>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+  <defs>
+    <linearGradient id="pageL" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#E7FBF8"/>
+    </linearGradient>
+    <linearGradient id="teal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#50D5C7"/>
+      <stop offset="1" stop-color="#1AA7A1"/>
+    </linearGradient>
+    <linearGradient id="sun" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFD96A"/>
+      <stop offset="1" stop-color="#FFB03F"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M50 67c25-12 48-14 67-9v106c-19-5-42-3-67 10z" fill="url(#pageL)" stroke="#1AA7A1" stroke-width="7"/>
+    <path d="M190 67c-25-12-48-14-67-9v106c19-5 42-3 67 10z" fill="#F7FFFE" stroke="#1AA7A1" stroke-width="7"/>
+    <path d="M120 58v106" stroke="#83DCD6" stroke-width="7"/>
+    <path d="M70 93h27M70 119h22M143 93h27M143 119h22" stroke="#75CFC8" stroke-width="9"/>
+    <circle cx="177" cy="164" r="34" fill="url(#sun)" stroke="#FFFFFF" stroke-width="5"/>
+    <path d="M165 164h24M177 152v24" stroke="#FFFFFF" stroke-width="9"/>
+  </g>
+</svg>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180" fill="none">
+  <defs>
+    <linearGradient id="book" x1="37" y1="88" x2="136" y2="145" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#63D2FF"/>
+      <stop offset="1" stop-color="#2F80ED"/>
+    </linearGradient>
+    <linearGradient id="shirt" x1="63" y1="77" x2="117" y2="140" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8C71FF"/>
+      <stop offset="1" stop-color="#6F4EE1"/>
+    </linearGradient>
+  </defs>
+
+  <path d="M40 102C57 91 74 88 90 94V133C74 127 57 130 40 142V102Z" fill="url(#book)"/>
+  <path d="M140 102C123 91 106 88 90 94V133C106 127 123 130 140 142V102Z" fill="#A8D9FF"/>
+  <path d="M90 94V133" stroke="#F8FBFF" stroke-width="5" stroke-linecap="round"/>
+
+  <circle cx="90" cy="62" r="19" fill="#FFD8B5"/>
+  <path d="M68 92C68 79.8 77.8 70 90 70C102.2 70 112 79.8 112 92V114H68V92Z" fill="url(#shirt)"/>
+  <path d="M71 84L62 96V122" stroke="#FFB547" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M109 84L118 96V122" stroke="#FFB547" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="73" y="108" width="34" height="18" rx="7" fill="#FFFFFF" opacity="0.98"/>
+  <rect x="79" y="114" width="22" height="4" rx="2" fill="#79C6FF"/>
+</svg>

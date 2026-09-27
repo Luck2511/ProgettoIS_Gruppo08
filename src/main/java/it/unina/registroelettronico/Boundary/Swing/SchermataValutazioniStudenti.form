@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="it.unina.registroelettronico.Boundary.Swing.SchermataValutazioniStudenti">
+  <grid id="27dc6" binding="contentPane" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="14" vgap="16">
+    <margin top="28" left="36" bottom="28" right="36"/>
+    <constraints>
+      <xy x="20" y="20" width="940" height="720"/>
+    </constraints>
+    <properties>
+      <background color="-1116417"/>
+      <opaque value="true"/>
+      <preferredSize width="940" height="720"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <component id="c10001" class="javax.swing.JLabel" binding="lblHeader">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1"/>
+          <horizontalAlignment value="0"/>
+          <opaque value="true"/>
+          <preferredSize width="850" height="96"/>
+          <text value="&lt;html&gt;&lt;div style='text-align:center;'&gt;&lt;b&gt;&lt;font size='+4' color='#193B63'&gt;Valutazioni studenti&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;font color='#667788'&gt;Seleziona uno studente per visualizzare le valutazioni registrate nella classe.&lt;/font&gt;&lt;/div&gt;&lt;/html&gt;"/>
+          <verticalAlignment value="0"/>
+        </properties>
+      </component>
+      <component id="c10002" class="javax.swing.JLabel" binding="lblStudente">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font size="15" style="1"/>
+          <foreground color="-15123613"/>
+          <text value="Studente"/>
+        </properties>
+      </component>
+      <component id="c10003" class="javax.swing.JComboBox" binding="cmbStudente">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1"/>
+          <font size="14" style="0"/>
+          <foreground color="-15123613"/>
+          <preferredSize width="650" height="48"/>
+        </properties>
+      </component>
+      <scrollpane id="c10004" binding="scrollValutazioni">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1116417"/>
+          <horizontalScrollBarPolicy value="31"/>
+          <opaque value="false"/>
+          <preferredSize width="850" height="475"/>
+          <verticalScrollBarPolicy value="20"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <grid id="c10005" binding="pnlValutazioni" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="6" left="6" bottom="6" right="6"/>
+            <constraints/>
+            <properties>
+              <background color="-1116417"/>
+              <opaque value="true"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+        </children>
+      </scrollpane>
+      <component id="c10006" class="javax.swing.JLabel" binding="lblInfo">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font size="13" style="0"/>
+          <foreground color="-10066330"/>
+          <horizontalAlignment value="0"/>
+          <text value="Seleziona uno studente per visualizzare i suoi voti."/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

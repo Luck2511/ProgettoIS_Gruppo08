@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="it.unina.registroelettronico.Boundary.SchermataRegistraValutazione">
+  <grid id="27dc6" binding="contentPane" layout-manager="GridLayoutManager" row-count="7" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="16" vgap="18">
+    <margin top="28" left="42" bottom="30" right="42"/>
+    <constraints>
+      <xy x="20" y="20" width="900" height="720"/>
+    </constraints>
+    <properties>
+      <background color="-1116417"/>
+      <opaque value="true"/>
+      <preferredSize width="900" height="720"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <component id="a10001" class="javax.swing.JLabel" binding="lblHeader">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1"/>
+          <horizontalAlignment value="0"/>
+          <opaque value="true"/>
+          <preferredSize width="800" height="104"/>
+          <text value="&lt;html&gt;&lt;div style='text-align:center;'&gt;&lt;b&gt;&lt;font size='+4' color='#193B63'&gt;Registra valutazione&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;font color='#667788'&gt;Inserisci i dati della valutazione dello studente.&lt;/font&gt;&lt;/div&gt;&lt;/html&gt;"/>
+          <verticalAlignment value="0"/>
+        </properties>
+      </component>
+      <component id="a10002" class="javax.swing.JLabel" binding="lblTipologia">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font size="15" style="1"/>
+          <foreground color="-15123613"/>
+          <text value="Tipologia"/>
+        </properties>
+      </component>
+      <component id="a10003" class="javax.swing.JComboBox" binding="cmbTipologia">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1"/>
+          <font size="14" style="0"/>
+          <foreground color="-15123613"/>
+          <preferredSize width="530" height="48"/>
+        </properties>
+      </component>
+      <component id="a10004" class="javax.swing.JLabel" binding="lblVoto">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font size="15" style="1"/>
+          <foreground color="-15123613"/>
+          <text value="Voto"/>
+        </properties>
+      </component>
+      <component id="a10005" class="javax.swing.JComboBox" binding="cmbVoto">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1"/>
+          <font size="14" style="0"/>
+          <foreground color="-15123613"/>
+          <preferredSize width="530" height="48"/>
+        </properties>
+      </component>
+      <component id="a10006" class="javax.swing.JLabel" binding="lblStudente">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font size="15" style="1"/>
+          <foreground color="-15123613"/>
+          <text value="Studente"/>
+        </properties>
+      </component>
+      <component id="a10007" class="javax.swing.JComboBox" binding="cmbStudente">
+        <constraints>
+          <grid row="3" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1"/>
+          <font size="14" style="0"/>
+          <foreground color="-15123613"/>
+          <preferredSize width="530" height="48"/>
+        </properties>
+      </component>
+      <component id="a10008" class="javax.swing.JLabel" binding="lblData">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font size="15" style="1"/>
+          <foreground color="-15123613"/>
+          <text value="Data"/>
+        </properties>
+      </component>
+      <component id="a10009" class="javax.swing.JTextField" binding="txtData">
+        <constraints>
+          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1"/>
+          <editable value="false"/>
+          <font size="14" style="0"/>
+          <foreground color="-15123613"/>
+          <preferredSize width="385" height="48"/>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="a10010" class="javax.swing.JButton" binding="btnScegliData">
+        <constraints>
+          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1"/>
+          <focusPainted value="false"/>
+          <font size="13" style="1"/>
+          <foreground color="-13664019"/>
+          <preferredSize width="132" height="48"/>
+          <text value="Scegli data"/>
+        </properties>
+      </component>
+      <component id="a10011" class="javax.swing.JLabel" binding="lblNota">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font size="15" style="1"/>
+          <foreground color="-15123613"/>
+          <text value="Nota"/>
+        </properties>
+      </component>
+      <component id="a10012" class="javax.swing.JTextArea" binding="txtNota">
+        <constraints>
+          <grid row="5" column="1" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1"/>
+          <font size="14" style="0"/>
+          <foreground color="-15123613"/>
+          <minimumSize width="530" height="125"/>
+          <preferredSize width="530" height="150"/>
+        </properties>
+      </component>
+      <component id="a10013" class="javax.swing.JButton" binding="btnRegistraValutazione">
+        <constraints>
+          <grid row="6" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-13664019"/>
+          <focusPainted value="false"/>
+          <font size="15" style="1"/>
+          <foreground color="-1"/>
+          <preferredSize width="280" height="54"/>
+          <text value="Registra valutazione"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

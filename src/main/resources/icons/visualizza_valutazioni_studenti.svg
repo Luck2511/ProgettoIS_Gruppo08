@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+  <defs>
+    <linearGradient id="sheet" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#EEF3FF"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFD66B"/>
+      <stop offset="1" stop-color="#FFAD3C"/>
+    </linearGradient>
+    <linearGradient id="purple" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8E72FF"/>
+      <stop offset="1" stop-color="#5E49DA"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="42" y="30" width="120" height="162" rx="22" fill="url(#sheet)" stroke="#6C57D7" stroke-width="7"/>
+    <path d="M70 70h66M70 100h48M70 130h56" stroke="#B4A6EC" stroke-width="9"/>
+    <circle cx="173" cy="160" r="37" fill="url(#gold)" stroke="#FFFFFF" stroke-width="5"/>
+    <text x="173" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#FFFFFF">A+</text>
+    <circle cx="83" cy="158" r="23" fill="url(#purple)"/>
+    <path d="M68 177c2-19 9-28 15-28 7 0 14 9 16 28" fill="url(#purple)" stroke="none"/>
+  </g>
+</svg>
