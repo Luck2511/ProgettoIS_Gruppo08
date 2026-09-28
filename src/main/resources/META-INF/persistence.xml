@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
+                                 https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
+             version="3.1">
+
+    <persistence-unit name="SistemaRegistroElettronico">
+
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <class>it.unina.registroelettronico.Entity.ClasseVirtuale</class>
+        <class>it.unina.registroelettronico.Entity.Compito</class>
+        <class>it.unina.registroelettronico.Entity.Docente</class>
+        <class>it.unina.registroelettronico.Entity.Lezione</class>
+        <class>it.unina.registroelettronico.Entity.Registro</class>
+        <class>it.unina.registroelettronico.Entity.Studente</class>
+        <class>it.unina.registroelettronico.Entity.Utente</class>
+        <class>it.unina.registroelettronico.Entity.Valutazione</class>
+
+
+        <properties>
+
+            <property name="jakarta.persistence.jdbc.driver"
+                      value="com.mysql.cj.jdbc.Driver"/>
+
+            <property name="jakarta.persistence.jdbc.url"
+                      value="jdbc:mysql://127.0.0.1:3306/SistemaRegistroElettronico_db?createDatabaseIfNotExist=true"/>
+
+            <property name="jakarta.persistence.jdbc.user"
+                      value="root"/>
+
+            <property name="jakarta.persistence.jdbc.password"
+                      value="FASOLINO2026"/>
+
+            <property name="hibernate.hbm2ddl.auto"
+                      value="update"/>
+
+            <property name="hibernate.show_sql"
+                      value="true"/>
+
+            <property name="hibernate.format_sql"
+                      value="true"/>
+
+        </properties>
+
+    </persistence-unit>
+
+</persistence>
