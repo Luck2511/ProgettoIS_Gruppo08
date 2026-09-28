@@ -3,17 +3,23 @@ package it.unina.registroelettronico.Boundary.Swing;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import it.unina.registroelettronico.Boundary.Swing.SchermataSelezioneRegistraVoce;
+import it.unina.registroelettronico.DTO.InfoClasseDTO;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Locale;
 
 public class SchermataRegistro {
+
+    private InfoClasseDTO classe;
 
     private JPanel contentPane;
     private JLabel lblHeader;
@@ -27,7 +33,9 @@ public class SchermataRegistro {
     private final Border bordoHover =
             BorderFactory.createLineBorder(new Color(47, 128, 237), 3, true);
 
-    public SchermataRegistro() {
+    public SchermataRegistro(InfoClasseDTO classe) {
+
+        this.classe = classe;
 
         btnRicercaRapida.setIcon(
                 spostaIconaDestra(
@@ -53,6 +61,42 @@ public class SchermataRegistro {
         preparaCard(btnRicercaRapida);
         preparaCard(btnRegistraVoce);
         preparaCard(btnVisualizzaInfo);
+
+        btnRegistraVoce.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                apriSchermataSelezioneRegistraVoce(classe);
+            }
+        });
+
+        btnVisualizzaInfo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                apriSchermataVisualizzaInfo(classe);
+            }
+        });
+    }
+
+    private void apriSchermataVisualizzaInfo(InfoClasseDTO classe) {
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(contentPane);
+
+        SchermataVisualizzaInfo schermataVisualizzaInfo =
+                new SchermataVisualizzaInfo(classe);
+
+        frame.setContentPane(schermataVisualizzaInfo.getContentPane());
+        frame.revalidate();
+        frame.repaint();
+    }
+
+    private void apriSchermataSelezioneRegistraVoce(InfoClasseDTO classe) {
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(contentPane);
+
+        SchermataSelezioneRegistraVoce schermataSelezioneRegistraVoce =
+                new SchermataSelezioneRegistraVoce(classe);
+
+        frame.setContentPane(schermataSelezioneRegistraVoce.getContentPane());
+        frame.revalidate();
+        frame.repaint();
     }
 
     private Icon spostaIconaDestra(Icon icona, int offsetX) {

@@ -2,15 +2,24 @@ package it.unina.registroelettronico.Boundary.Swing;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import it.unina.registroelettronico.Boundary.Swing.SchermataRegistro;
+import it.unina.registroelettronico.Controller.ControllerClassi;
+import it.unina.registroelettronico.DTO.InfoClasseDTO;
+import it.unina.registroelettronico.DTO.StudenteDTO;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.Locale;
 
 public class SchermataClasse {
+
+    private InfoClasseDTO classe;
 
     private JPanel contentPane;
     private JLabel lblNomeClasse;
@@ -22,6 +31,52 @@ public class SchermataClasse {
     private JLabel lblStudentiHint;
     private JScrollPane scrollStudenti;
     private JList lstStudenti;
+
+    public SchermataClasse(InfoClasseDTO classe) {
+        this.classe = classe;
+        lblNomeClasse.setText(classe.getNome());
+        lblCodiceClasse.setText("Codice classe: " + classe.getCodice());
+
+        caricaStudenti(classe.getCodice());
+
+        btnApriRegistro.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                apriSchermataRegistro(classe);
+            }
+        });
+    }
+
+    private void apriSchermataRegistro(InfoClasseDTO classe) {
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(contentPane);
+
+        SchermataRegistro schermataRegistro = new SchermataRegistro(classe);
+
+        frame.setContentPane(schermataRegistro.getContentPane());
+        frame.revalidate();
+        frame.repaint();
+    }
+
+    private void caricaStudenti(String codice) {
+
+        ControllerClassi controllerClassi=ControllerClassi.getInstance();
+
+        List<StudenteDTO> studenti = controllerClassi.recuperaStudenti(codice);
+
+
+        aggiornaElencoStudenti(studenti);
+    }
+
+    private void aggiornaElencoStudenti(List<StudenteDTO> studenti) {
+        DefaultListModel<String> model = new DefaultListModel<>();
+
+        for (StudenteDTO studente : studenti) {
+            model.addElement(studente.getNome() + " " + studente.getCognome()
+                    + " - " + studente.getIndirizzoEmailIstituzionale());
+        }
+
+        lstStudenti.setModel(model);
+    }
 
     public JPanel getContentPane() {
         return contentPane;

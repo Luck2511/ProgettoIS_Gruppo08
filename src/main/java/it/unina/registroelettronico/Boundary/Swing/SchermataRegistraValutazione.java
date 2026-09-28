@@ -2,6 +2,10 @@ package it.unina.registroelettronico.Boundary.Swing;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import it.unina.registroelettronico.Controller.ControllerClassi;
+import it.unina.registroelettronico.Controller.ControllerRegistro;
+import it.unina.registroelettronico.DTO.InfoClasseDTO;
+import it.unina.registroelettronico.DTO.StudenteDTO;
 
 import javax.swing.*;
 import javax.swing.border.AbstractBorder;
@@ -13,6 +17,7 @@ import javax.swing.plaf.basic.BasicTextAreaUI;
 import javax.swing.plaf.basic.BasicTextFieldUI;
 import javax.swing.text.StyleContext;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -26,6 +31,9 @@ import java.util.List;
 import java.util.Locale;
 
 public class SchermataRegistraValutazione {
+
+    private InfoClasseDTO classe;
+    private List<StudenteDTO> studenti;
 
     private JPanel contentPane;
     private JLabel lblHeader;
@@ -53,14 +61,12 @@ public class SchermataRegistraValutazione {
     private final Color bluScuro = new Color(25, 59, 99);
     private final Color bordoChiaro = new Color(218, 232, 244);
 
-    public SchermataRegistraValutazione() {
+    public SchermataRegistraValutazione(InfoClasseDTO classe) {
+
+        this.classe=classe;
 
         cmbTipologia.setModel(new DefaultComboBoxModel<>(
-                new String[]{
-                        "Seleziona tipologia",
-                        "Interrogazione orale",
-                        "Prova scritta"
-                }
+                new String[]{"Seleziona tipologia"}
         ));
 
         cmbVoto.setModel(new DefaultComboBoxModel<>(creaVoti()));
@@ -72,8 +78,185 @@ public class SchermataRegistraValutazione {
         preparaCampi();
         preparaPulsanti();
 
-        btnScegliData.addActionListener(e -> apriCalendario());
+        caricaTipologieValutazione();
+        caricaStudenti(classe.getCodice());
+
+        btnScegliData.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                apriCalendario();
+            }
+        });
+
+        btnRegistraValutazione.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                registraValutazione();
+            }
+        });
     }
+
+    private void caricaTipologieValutazione() {
+
+
+        ControllerRegistro controllerRegistro =
+                ControllerRegistro.getInstance();
+
+        List<String> tipologie =
+                controllerRegistro.recuperaTipologieValutazione();
+
+        setTipologieValutazione(
+                tipologie.toArray(new String[0])
+        );
+
+    }
+
+    private void setTipologieValutazione(String[] tipologie) {
+        DefaultComboBoxModel<String> model =
+                new DefaultComboBoxModel<>();
+
+        model.addElement("Seleziona tipologia");
+
+        if (tipologie != null) {
+            for (String tipologia : tipologie) {
+                model.addElement(tipologia);
+            }
+        }
+
+        cmbTipologia.setModel(model);
+    }
+
+    private void caricaStudenti(String codiceClasse) {
+        ControllerClassi controllerClassi = ControllerClassi.getInstance();
+
+        studenti =
+                controllerClassi.recuperaStudenti(codiceClasse);
+
+        //Convertiamo in lista di stringhe per visualizzazione grafica
+        String[] studentiVisualizzati = new String[studenti.size()];
+
+        for (int i = 0; i < studenti.size(); i++) {
+            StudenteDTO studente = studenti.get(i);
+
+            studentiVisualizzati[i] =
+                    studente.getNome() + " "
+                            + studente.getCognome()
+                            + " - "
+                            + studente.getIndirizzoEmailIstituzionale();
+        }
+
+        setStudenti(studentiVisualizzati);
+    }
+
+    private void registraValutazione() {
+
+        String tipologia = getTipologiaSelezionata();
+        String voto = getVotoSelezionato();
+        int indiceStudente = cmbStudente.getSelectedIndex();
+        LocalDate data = getDataSelezionata();
+        String nota = getNota();
+
+        if (cmbTipologia.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(
+                    contentPane,
+                    "Seleziona una tipologia."
+            );
+            return;
+        }
+
+        if (cmbVoto.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(
+                    contentPane,
+                    "Seleziona un voto."
+            );
+            return;
+        }
+
+        if (indiceStudente == 0) {
+            JOptionPane.showMessageDialog(
+                    contentPane,
+                    "Seleziona uno studente."
+            );
+            return;
+        }
+
+        if (data == null) {
+            JOptionPane.showMessageDialog(
+                    contentPane,
+                    "Seleziona una data."
+            );
+            return;
+        }
+
+        float votoNumerico=convertiVoto(voto);
+
+        StudenteDTO studente =
+                studenti.get(indiceStudente - 1);
+
+        String emailStudente =
+                studente.getIndirizzoEmailIstituzionale();
+
+        ControllerRegistro controllerRegistro =
+                ControllerRegistro.getInstance();
+
+        boolean esitoCasoDUso=controllerRegistro.registraValutazione(
+                classe.getCodice(),
+                emailStudente,
+                tipologia,
+                votoNumerico,
+                data,
+                nota
+        );
+
+        if(esitoCasoDUso){
+            JOptionPane.showMessageDialog(
+                    contentPane,
+                    "Registrazione valutazione completata con successo."
+            );
+
+        }
+        else{
+            //TODO IN CASO DI ERRORE
+            JOptionPane.showMessageDialog(
+                    contentPane,
+                    "Errore nella registrazione della valutazione."
+            );
+            return;
+        }
+
+
+
+    }
+
+    private float convertiVoto(String voto) {
+
+        if (voto.endsWith("+")) {
+            float valore = Float.parseFloat(
+                    voto.substring(0, voto.length() - 1)
+            );
+
+            return valore + 0.25f;
+        }
+
+        if (voto.endsWith("½")) {
+            float valore = Float.parseFloat(
+                    voto.substring(0, voto.length() - 1)
+            );
+
+            return valore + 0.5f;
+        }
+
+        if (voto.endsWith("-")) {
+            float valore = Float.parseFloat(
+                    voto.substring(0, voto.length() - 1)
+            );
+
+            return valore - 0.25f;
+        }
+
+        return Float.parseFloat(voto);
+    }
+
 
     private void preparaCampi() {
         Border bordoCampo = new RoundedBorder(bordoChiaro, 2, 20);
@@ -275,15 +458,15 @@ public class SchermataRegistraValutazione {
                     );
                 }
 
-                btnGiorno.addActionListener(e -> {
-                    dataSelezionata =
-                            meseVisualizzato[0].atDay(giornoCorrente);
-
-                    txtData.setText(
-                            dataSelezionata.format(formatoData)
-                    );
-
-                    dialog.dispose();
+                btnGiorno.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        selezionaData(
+                                dialog,
+                                meseVisualizzato[0],
+                                giornoCorrente
+                        );
+                    }
                 });
 
                 calendario.add(btnGiorno);
@@ -293,16 +476,24 @@ public class SchermataRegistraValutazione {
             calendario.repaint();
         };
 
-        btnPrecedente.addActionListener(e -> {
-            meseVisualizzato[0] =
-                    meseVisualizzato[0].minusMonths(1);
-            aggiornaCalendario.run();
+        btnPrecedente.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mostraMesePrecedente(
+                        meseVisualizzato,
+                        aggiornaCalendario
+                );
+            }
         });
 
-        btnSuccessivo.addActionListener(e -> {
-            meseVisualizzato[0] =
-                    meseVisualizzato[0].plusMonths(1);
-            aggiornaCalendario.run();
+        btnSuccessivo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mostraMeseSuccessivo(
+                        meseVisualizzato,
+                        aggiornaCalendario
+                );
+            }
         });
 
         aggiornaCalendario.run();
@@ -311,6 +502,40 @@ public class SchermataRegistraValutazione {
         dialog.setSize(440, 390);
         dialog.setLocationRelativeTo(contentPane);
         dialog.setVisible(true);
+    }
+
+    private void selezionaData(
+            JDialog dialog,
+            YearMonth meseVisualizzato,
+            int giorno
+    ) {
+        dataSelezionata = meseVisualizzato.atDay(giorno);
+
+        txtData.setText(
+                dataSelezionata.format(formatoData)
+        );
+
+        dialog.dispose();
+    }
+
+    private void mostraMesePrecedente(
+            YearMonth[] meseVisualizzato,
+            Runnable aggiornaCalendario
+    ) {
+        meseVisualizzato[0] =
+                meseVisualizzato[0].minusMonths(1);
+
+        aggiornaCalendario.run();
+    }
+
+    private void mostraMeseSuccessivo(
+            YearMonth[] meseVisualizzato,
+            Runnable aggiornaCalendario
+    ) {
+        meseVisualizzato[0] =
+                meseVisualizzato[0].plusMonths(1);
+
+        aggiornaCalendario.run();
     }
 
     private void preparaPulsanteCalendario(JButton button) {
@@ -349,20 +574,12 @@ public class SchermataRegistraValutazione {
         return (String) cmbVoto.getSelectedItem();
     }
 
-    public String getStudenteSelezionato() {
-        return (String) cmbStudente.getSelectedItem();
-    }
-
     public LocalDate getDataSelezionata() {
         return dataSelezionata;
     }
 
     public String getNota() {
         return txtNota.getText().trim();
-    }
-
-    public void addRegistraValutazioneListener(ActionListener listener) {
-        btnRegistraValutazione.addActionListener(listener);
     }
 
     public JPanel getContentPane() {

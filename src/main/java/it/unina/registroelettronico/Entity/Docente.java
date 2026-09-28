@@ -1,9 +1,14 @@
 package it.unina.registroelettronico.Entity;
 
+import jakarta.persistence.*;
+
 import java.util.List;
 
+@Entity
+@PrimaryKeyJoinColumn(name = "id")
 public class Docente extends Utente{
 
+    @OneToMany(mappedBy = "docente")
     private List<ClasseVirtuale> classiGestite;
 
 
@@ -12,7 +17,9 @@ public class Docente extends Utente{
         //VEDI per le classi
     }
 
+    public Docente(){
 
+    }
 
     public boolean verificaUnivocitaNome(String nomeClasse) {
 
@@ -24,4 +31,6 @@ public class Docente extends Utente{
         return true;
 
     }
+
+
 }

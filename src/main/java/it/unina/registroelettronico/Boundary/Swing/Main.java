@@ -2,6 +2,14 @@ package it.unina.registroelettronico.Boundary.Swing;
 
 
 
+
+
+
+import it.unina.registroelettronico.Boundary.SchermataRegistraValutazione;
+import it.unina.registroelettronico.Boundary.SchermataRegistro;
+import it.unina.registroelettronico.Boundary.SchermataSelezioneRegistraVoce;
+import it.unina.registroelettronico.Boundary.SchermataVisualizzaInfo;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -27,7 +35,7 @@ public class Main {
             /*SchermataDocente schermataDocente =
                     new SchermataDocente();
             */
-            //Prova commmit
+
             SchermataIniziale schermataIniziale=new SchermataIniziale();
             frame.setContentPane(
                     schermataIniziale.getContentPane()

@@ -3,17 +3,22 @@ package it.unina.registroelettronico.Boundary.Swing;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import it.unina.registroelettronico.DTO.InfoClasseDTO;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Locale;
 
 public class SchermataVisualizzaInfo {
+
+    private InfoClasseDTO classe;
 
     private JPanel contentPane;
     private JLabel lblHeader;
@@ -29,7 +34,9 @@ public class SchermataVisualizzaInfo {
     private final Border bordoHover =
             BorderFactory.createLineBorder(new Color(47, 128, 237), 3, true);
 
-    public SchermataVisualizzaInfo() {
+    public SchermataVisualizzaInfo(InfoClasseDTO classe) {
+
+        this.classe=classe;
 
         btnVisualizzaValutazioniStudenti.setIcon(
                 new FlatSVGIcon("icons/visualizza_valutazioni_studenti.svg", 118, 118)
@@ -51,6 +58,24 @@ public class SchermataVisualizzaInfo {
         preparaCard(btnVisualizzaCompitiAssegnati);
         preparaCard(btnVisualizzaAndamentoClasse);
         preparaCard(btnVisualizzaLezioniSvolte);
+
+        btnVisualizzaValutazioniStudenti.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                apriSchermataValutazioniStudenti(classe);
+            }
+        });
+    }
+
+    private void apriSchermataValutazioniStudenti(InfoClasseDTO classe) {
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(contentPane);
+
+        SchermataValutazioniStudenti schermataValutazioniStudenti =
+                new SchermataValutazioniStudenti(classe);
+
+        frame.setContentPane(schermataValutazioniStudenti.getContentPane());
+        frame.revalidate();
+        frame.repaint();
     }
 
     private void preparaCard(JButton card) {

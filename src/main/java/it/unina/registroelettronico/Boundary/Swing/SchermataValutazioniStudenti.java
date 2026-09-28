@@ -2,6 +2,11 @@ package it.unina.registroelettronico.Boundary.Swing;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import it.unina.registroelettronico.Controller.ControllerClassi;
+import it.unina.registroelettronico.Controller.ControllerRegistro;
+import it.unina.registroelettronico.DTO.InfoClasseDTO;
+import it.unina.registroelettronico.DTO.InfoValutazioneDTO;
+import it.unina.registroelettronico.DTO.StudenteDTO;
 
 import javax.swing.*;
 import javax.swing.border.AbstractBorder;
@@ -9,9 +14,17 @@ import javax.swing.plaf.FontUIResource;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 import javax.swing.text.StyleContext;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.Locale;
 
 public class SchermataValutazioniStudenti {
+
+    private InfoClasseDTO classe;
+
+    // CODICE AGGIUNTO: conserva gli studenti recuperati per la classe selezionata.
+    private List<StudenteDTO> studenti;
 
     private JPanel contentPane;
     private JLabel lblHeader;
@@ -25,7 +38,9 @@ public class SchermataValutazioniStudenti {
     private final Color testoSecondario = new Color(102, 119, 136);
     private final Color bordoChiaro = new Color(218, 232, 244);
 
-    public SchermataValutazioniStudenti() {
+    public SchermataValutazioniStudenti(InfoClasseDTO classe) {
+
+        this.classe=classe;
 
         cmbStudente.setModel(new DefaultComboBoxModel<>(
                 new String[]{"Seleziona studente"}
@@ -51,7 +66,91 @@ public class SchermataValutazioniStudenti {
         scrollValutazioni.getViewport().setOpaque(false);
         scrollValutazioni.getVerticalScrollBar().setUnitIncrement(18);
 
+        // CODICE AGGIUNTO: recupera gli studenti della classe e popola la combo.
+        caricaStudenti(classe.getCodice());
+
         mostraMessaggioIniziale();
+
+        // CODICE AGGIUNTO: quando cambia lo studente selezionato,
+        // avvia il recupero delle sue valutazioni.
+        cmbStudente.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                caricaValutazioniStudente();
+            }
+        });
+    }
+
+    //stessa logica usata in SchermataRegistraValutazione
+    //per recuperare dal ControllerClassi gli studenti della classe.
+    private void caricaStudenti(String codiceClasse) {
+
+        ControllerClassi controllerClassi =
+                ControllerClassi.getInstance();
+
+        studenti =
+                controllerClassi.recuperaStudenti(codiceClasse);
+
+        String[] studentiVisualizzati =
+                new String[studenti.size()];
+
+        for (int i = 0; i < studenti.size(); i++) {
+
+            StudenteDTO studente = studenti.get(i);
+
+            studentiVisualizzati[i] =
+                    studente.getNome() + " "
+                            + studente.getCognome()
+                            + " - "
+                            + studente.getIndirizzoEmailIstituzionale();
+        }
+
+        setStudenti(studentiVisualizzati);
+    }
+
+    private void setStudenti(String[] studentiVisualizzati) {
+
+        DefaultComboBoxModel<String> model =
+                new DefaultComboBoxModel<>();
+
+        model.addElement("Seleziona studente");
+
+        if (studentiVisualizzati != null) {
+            for (String studente : studentiVisualizzati) {
+                model.addElement(studente);
+            }
+        }
+
+        cmbStudente.setModel(model);
+    }
+
+
+    private void caricaValutazioniStudente() {
+
+        int indiceStudente = cmbStudente.getSelectedIndex();
+
+        if (indiceStudente == 0) {
+            mostraMessaggioIniziale();
+            return;
+        }
+
+        StudenteDTO studente =
+                studenti.get(indiceStudente - 1);
+
+        String emailStudente =
+                studente.getIndirizzoEmailIstituzionale();
+
+
+
+        ControllerRegistro controllerRegistro = ControllerRegistro.getInstance();
+        List<InfoValutazioneDTO> valutazioni =
+                 controllerRegistro.recuperaValutazioniStudente(
+                         classe.getCodice(),
+                         emailStudente
+                );
+
+        aggiornaElencoValutazioni(valutazioni);
+
     }
 
     private void mostraMessaggioIniziale() {
@@ -84,6 +183,55 @@ public class SchermataValutazioniStudenti {
         pnlValutazioni.repaint();
     }
 
+    // CODICE AGGIUNTO: riceve l'elenco completo delle valutazioni
+    // restituito dal Controller e le visualizza una per una nel pannello.
+    private void aggiornaElencoValutazioni(
+            List<InfoValutazioneDTO> valutazioni
+    ) {
+
+        pnlValutazioni.removeAll();
+
+        if (valutazioni == null || valutazioni.isEmpty()) {
+
+            JLabel messaggio = new JLabel(
+                    "Nessuna valutazione registrata per lo studente selezionato.",
+                    SwingConstants.CENTER
+            );
+
+            messaggio.setForeground(testoSecondario);
+            messaggio.setAlignmentX(Component.CENTER_ALIGNMENT);
+            messaggio.setBorder(
+                    BorderFactory.createEmptyBorder(90, 20, 90, 20)
+            );
+
+            pnlValutazioni.add(Box.createVerticalGlue());
+            pnlValutazioni.add(messaggio);
+            pnlValutazioni.add(Box.createVerticalGlue());
+
+        } else {
+
+            for (InfoValutazioneDTO valutazione : valutazioni) {
+
+                JPanel card = creaCardValutazione(
+                        String.valueOf(valutazione.getData()),
+                        valutazione.getTipologia(),
+                        valutazione.getNotaDescrittiva(),
+                        String.valueOf(valutazione.getVoto())
+                );
+
+                pnlValutazioni.add(card);
+                pnlValutazioni.add(
+                        Box.createRigidArea(new Dimension(0, 14))
+                );
+            }
+        }
+
+        pnlValutazioni.revalidate();
+        pnlValutazioni.repaint();
+    }
+
+    // METODO GIA' PRESENTE:
+    // crea graficamente la card relativa a UNA singola valutazione.
     private JPanel creaCardValutazione(
             String data,
             String tipologia,

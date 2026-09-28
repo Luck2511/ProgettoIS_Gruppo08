@@ -4,17 +4,23 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import it.unina.registroelettronico.Boundary.Swing.SchermataRegistraValutazione;
+import it.unina.registroelettronico.DTO.InfoClasseDTO;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Locale;
 
 public class SchermataSelezioneRegistraVoce {
+
+    private InfoClasseDTO classe;
 
     private JPanel contentPane;
     private JLabel lblHeader;
@@ -29,7 +35,9 @@ public class SchermataSelezioneRegistraVoce {
     private final Border bordoHover =
             BorderFactory.createLineBorder(new Color(47, 128, 237), 3, true);
 
-    public SchermataSelezioneRegistraVoce() {
+    public SchermataSelezioneRegistraVoce(InfoClasseDTO classe) {
+
+        this.classe = classe;
 
         cardCompito.setIcon(
                 new FlatSVGIcon("icons/compito.svg", 112, 112)
@@ -46,6 +54,24 @@ public class SchermataSelezioneRegistraVoce {
         preparaCard(cardCompito);
         preparaCard(cardValutazione);
         preparaCard(cardLezione);
+
+        cardValutazione.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                apriSchermataRegistraValutazione();
+            }
+        });
+    }
+
+    private void apriSchermataRegistraValutazione() {
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(contentPane);
+
+        SchermataRegistraValutazione schermataRegistraValutazione =
+                new SchermataRegistraValutazione();
+
+        frame.setContentPane(schermataRegistraValutazione.getContentPane());
+        frame.revalidate();
+        frame.repaint();
     }
 
     private void preparaCard(JButton card) {
@@ -184,4 +210,5 @@ public class SchermataSelezioneRegistraVoce {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

@@ -1,9 +1,26 @@
 package it.unina.registroelettronico.Entity;
 
+import jakarta.persistence.*;
+
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Utente {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(nullable = false)
     private String nome;
+
+    @Column(nullable = false)
     private String cognome;
+
+    @Column(
+            nullable = false,
+            unique = true
+    )
     private String indirizzoEmailIstituzionale;
 
     public Utente(String indirizzoEmailIstituzionale, String cognome, String nome) {
@@ -13,6 +30,18 @@ public class Utente {
     }
 
 
+
+    public Utente(){
+
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getCognome() {
+        return cognome;
+    }
 
     public String getIndirizzoEmailIstituzionale() {
         return indirizzoEmailIstituzionale;

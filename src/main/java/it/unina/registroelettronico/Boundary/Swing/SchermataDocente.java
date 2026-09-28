@@ -340,7 +340,24 @@ public class SchermataDocente {
         card.add(top, BorderLayout.NORTH);
         card.add(info, BorderLayout.CENTER);
 
+        card.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                apriSchermataClasse(classe);
+            }
+        });
+
         return card;
+    }
+
+    private void apriSchermataClasse(InfoClasseDTO classe) {
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(contentPane);
+
+        SchermataClasse schermataClasse = new SchermataClasse(classe);
+        frame.setContentPane(schermataClasse.getContentPane());
+
+        frame.revalidate();
+        frame.repaint();
     }
 
     private Color schiarisci(Color color) {

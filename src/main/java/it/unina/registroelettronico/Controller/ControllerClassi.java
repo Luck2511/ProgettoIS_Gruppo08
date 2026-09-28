@@ -8,6 +8,10 @@ import it.unina.registroelettronico.DTO.InfoClasseDTO;
 import it.unina.registroelettronico.DTO.StudenteDTO;
 import it.unina.registroelettronico.Entity.SistemaRegistroElettronico;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class ControllerClassi {
 
     private static ControllerClassi instance;
@@ -47,7 +51,7 @@ public class ControllerClassi {
         classeCreata=new InfoClasseDTO(nomeClasse,codice);
 
         //memorizzazione classe (e registro) e gestione persistenza
-        //TODO FARE QUESTA PARTE speriamo bene
+        //TODO FARE QUESTA PARTE
 
         //in caso di errori nella memorizzazione o nella persistenza fare qui un return false
 
@@ -84,6 +88,24 @@ public class ControllerClassi {
         //se già iscritto
         return false;
 
+
+    }
+
+    public List<StudenteDTO> recuperaStudenti(String codice) {
+
+        List<List<String>> elenco_studenti=sre.recuperaStudentiClasse(codice);
+
+        List<StudenteDTO> studenti=new ArrayList<>();
+
+
+        for(List<String> stud:elenco_studenti){
+
+            studenti.add(new StudenteDTO(stud.get(0),stud.get(1),stud.get(2)));
+
+        }
+
+
+        return studenti;
 
     }
 }

@@ -1,8 +1,11 @@
 package it.unina.registroelettronico.Entity;
 
 
+import it.unina.registroelettronico.DTO.StudenteDTO;
 import it.unina.registroelettronico.Database.GestorePersistenza;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -16,23 +19,22 @@ public class SistemaRegistroElettronico {
 
     public SistemaRegistroElettronico() {
         gestorePersistenza = new GestorePersistenza();
-       // utenti = gestorePersistenza.caricaUtenti();
-     //   classiVirtuali = gestorePersistenza.caricaClassiVirtuali();
+        // utenti = gestorePersistenza.caricaUtenti();
+        //   classiVirtuali = gestorePersistenza.caricaClassiVirtuali();
 
     }
 
 
+    public static SistemaRegistroElettronico getInstance() {
 
-    public static SistemaRegistroElettronico getInstance(){
-
-        if(instance==null){
-            instance=new SistemaRegistroElettronico();
+        if (instance == null) {
+            instance = new SistemaRegistroElettronico();
         }
 
         return instance;
     }
 
-    public boolean verificaUnivocitaNomeClassePerDocente(String nomeClasse,String email){
+    public boolean verificaUnivocitaNomeClassePerDocente(String nomeClasse, String email) {
 
         Docente docente = cercaDocentePerEmail(email);
 
@@ -40,12 +42,12 @@ public class SistemaRegistroElettronico {
 
     }
 
-    private Docente cercaDocentePerEmail(String emailDocente){
+    private Docente cercaDocentePerEmail(String emailDocente) {
 
-        for(Utente u:utenti){
-            if(u instanceof Docente){
-                if(u.getIndirizzoEmailIstituzionale().equals(emailDocente)){
-                    return (Docente)u;
+        for (Utente u : utenti) {
+            if (u instanceof Docente) {
+                if (u.getIndirizzoEmailIstituzionale().equals(emailDocente)) {
+                    return (Docente) u;
                 }
             }
         }
@@ -54,7 +56,7 @@ public class SistemaRegistroElettronico {
         return null;
     }
 
-    private String generaCodice(){
+    private String generaCodice() {
         String caratteri = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
         Random random = new Random();
         StringBuilder sb = new StringBuilder("CLS-");
@@ -66,9 +68,9 @@ public class SistemaRegistroElettronico {
         return sb.toString();
     }
 
-    private boolean verificaUnivocitaCodice(String codice){
-        for(ClasseVirtuale c:classiVirtuali){
-            if(c.getCodice().equals(codice))
+    private boolean verificaUnivocitaCodice(String codice) {
+        for (ClasseVirtuale c : classiVirtuali) {
+            if (c.getCodice().equals(codice))
                 return false;
         }
 
@@ -76,13 +78,13 @@ public class SistemaRegistroElettronico {
     }
 
 
-    public String generaCodiceUnivoco(){
+    public String generaCodiceUnivoco() {
 
-        String codice="";
+        String codice = "";
 
-        do{
-            codice=generaCodice();
-        }while(!verificaUnivocitaCodice(codice));
+        do {
+            codice = generaCodice();
+        } while (!verificaUnivocitaCodice(codice));
 
         return codice;
 
@@ -91,9 +93,9 @@ public class SistemaRegistroElettronico {
 
     public boolean cercaClasse(String codiceClasse, String nomeClasse) {
 
-        for(ClasseVirtuale c:classiVirtuali){
-            if(c.getCodice().equals(codiceClasse)){
-                nomeClasse=c.getNome();
+        for (ClasseVirtuale c : classiVirtuali) {
+            if (c.getCodice().equals(codiceClasse)) {
+                nomeClasse = c.getNome();
                 return true;
             }
         }
@@ -103,23 +105,71 @@ public class SistemaRegistroElettronico {
 
     public boolean verificaIscrizione(String codiceClasse, String indirizzoEmailIstituzionale) {
 
-        ClasseVirtuale classe=null;
-        for(ClasseVirtuale c:classiVirtuali){
-            if(c.getCodice().equals(codiceClasse))
-                classe=c;
-
-        }
+        ClasseVirtuale classe = trovaClassePerCodice(codiceClasse);
 
         //non c'è il rischio di NullPointerException perché abbiamo verificato col metodo di prima che la classe esiste
 
-        for(Studente s:classe.getStudenti()){
-            if(s.getIndirizzoEmailIstituzionale().equals(indirizzoEmailIstituzionale)){
+        for (Studente s : classe.getStudenti()) {
+            if (s.getIndirizzoEmailIstituzionale().equals(indirizzoEmailIstituzionale)) {
                 return true;
             }
         }
 
         return false;
 
+
+    }
+
+    private ClasseVirtuale trovaClassePerCodice(String codice) {
+
+        ClasseVirtuale classe = null;
+        for (ClasseVirtuale c : classiVirtuali) {
+            if (c.getCodice().equals(codice))
+                classe = c;
+        }
+
+        return classe;
+
+    }
+
+    public List<List<String>> recuperaStudentiClasse(String codice) {
+
+        ClasseVirtuale classe = trovaClassePerCodice(codice);
+
+        List<List<String>> elenco_studenti=new ArrayList<>();
+
+        //fare in modo che se non ci sono studenti per classe virtuale l'attributo non sia null, ma una lista vuota
+        for (Studente s : classe.getStudenti()) {
+            List<String> stud=new ArrayList<>();
+            stud.add(s.getNome());
+            stud.add(s.getCognome());
+            stud.add(s.getIndirizzoEmailIstituzionale());
+
+            elenco_studenti.add(stud);
+
+        }
+
+        return elenco_studenti;
+    }
+
+    public List<String> recuperaTipologieValutazione() {
+
+        List<String> tipologie = new ArrayList<>();
+
+        for (TipologiaValutazione tipologia :
+                TipologiaValutazione.values()) {
+
+            tipologie.add(tipologia.toString());
+        }
+
+        return tipologie;
+
+    }
+
+    public Registro recuperaRegistro(String codice) {
+
+        ClasseVirtuale c=trovaClassePerCodice(codice);
+        return c.getRegistro();
 
     }
 }
