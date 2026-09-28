@@ -36,7 +36,7 @@ public class ControllerRegistro {
     public boolean registraValutazione(String codice, String emailStudente, String tipologia, float voto, LocalDate data, String nota) {
 
         //TODO MEMORIZZAZIONE PERSISTENZA E INVIO NOTIFICA
-
+        return true;
     }
 
     public List<InfoValutazioneDTO> recuperaValutazioniStudente(String codice, String emailStudente) {
