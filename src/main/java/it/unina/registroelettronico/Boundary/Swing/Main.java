@@ -1,15 +1,6 @@
 package it.unina.registroelettronico.Boundary.Swing;
 
 
-
-
-
-
-import it.unina.registroelettronico.Boundary.SchermataRegistraValutazione;
-import it.unina.registroelettronico.Boundary.SchermataRegistro;
-import it.unina.registroelettronico.Boundary.SchermataSelezioneRegistraVoce;
-import it.unina.registroelettronico.Boundary.SchermataVisualizzaInfo;
-
 import javax.swing.*;
 import java.awt.*;
 
