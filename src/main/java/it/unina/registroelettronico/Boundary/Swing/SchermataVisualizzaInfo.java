@@ -36,7 +36,7 @@ public class SchermataVisualizzaInfo {
 
     public SchermataVisualizzaInfo(InfoClasseDTO classe) {
 
-        this.classe=classe;
+        this.classe = classe;
 
         btnVisualizzaValutazioniStudenti.setIcon(
                 new FlatSVGIcon("icons/visualizza_valutazioni_studenti.svg", 118, 118)
@@ -119,10 +119,10 @@ public class SchermataVisualizzaInfo {
      */
     private void $$$setupUI$$$() {
         contentPane = new JPanel();
-        contentPane.setLayout(new GridLayoutManager(3, 2, new Insets(28, 30, 28, 30), -1, -1));
+        contentPane.setLayout(new GridLayoutManager(3, 2, new Insets(28, 30, 28, 30), 18, 18, true, false));
         contentPane.setBackground(new Color(-1116929));
         contentPane.setOpaque(true);
-        contentPane.setPreferredSize(new Dimension(980, 700));
+        contentPane.setPreferredSize(new Dimension(900, 590));
         lblHeader = new JLabel();
         lblHeader.setBackground(new Color(-1));
         Font lblHeaderFont = this.$$$getFont$$$(null, Font.PLAIN, 13, lblHeader.getFont());
@@ -130,7 +130,7 @@ public class SchermataVisualizzaInfo {
         lblHeader.setForeground(new Color(-14730405));
         lblHeader.setHorizontalAlignment(0);
         lblHeader.setOpaque(true);
-        lblHeader.setPreferredSize(new Dimension(900, 92));
+        lblHeader.setPreferredSize(new Dimension(840, 92));
         lblHeader.setText("<html><div style='text-align:center;'><b><font size='+4' color='#193B63'>Visualizza informazioni classe</font></b><br><br><font color='#667788'>Scegli l'informazione che vuoi consultare per la classe.</font></div></html>");
         lblHeader.setVerticalAlignment(0);
         contentPane.add(lblHeader, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -146,7 +146,7 @@ public class SchermataVisualizzaInfo {
         btnVisualizzaValutazioniStudenti.setHorizontalTextPosition(0);
         btnVisualizzaValutazioniStudenti.setIconTextGap(16);
         btnVisualizzaValutazioniStudenti.setOpaque(true);
-        btnVisualizzaValutazioniStudenti.setPreferredSize(new Dimension(410, 230));
+        btnVisualizzaValutazioniStudenti.setPreferredSize(new Dimension(390, 190));
         btnVisualizzaValutazioniStudenti.setText("Visualizza valutazioni studenti");
         btnVisualizzaValutazioniStudenti.setVerticalAlignment(0);
         btnVisualizzaValutazioniStudenti.setVerticalTextPosition(3);
@@ -162,7 +162,7 @@ public class SchermataVisualizzaInfo {
         btnVisualizzaCompitiAssegnati.setHorizontalTextPosition(0);
         btnVisualizzaCompitiAssegnati.setIconTextGap(16);
         btnVisualizzaCompitiAssegnati.setOpaque(true);
-        btnVisualizzaCompitiAssegnati.setPreferredSize(new Dimension(410, 230));
+        btnVisualizzaCompitiAssegnati.setPreferredSize(new Dimension(390, 190));
         btnVisualizzaCompitiAssegnati.setText("Visualizza compiti assegnati");
         btnVisualizzaCompitiAssegnati.setVerticalAlignment(0);
         btnVisualizzaCompitiAssegnati.setVerticalTextPosition(3);
@@ -178,7 +178,7 @@ public class SchermataVisualizzaInfo {
         btnVisualizzaAndamentoClasse.setHorizontalTextPosition(0);
         btnVisualizzaAndamentoClasse.setIconTextGap(16);
         btnVisualizzaAndamentoClasse.setOpaque(true);
-        btnVisualizzaAndamentoClasse.setPreferredSize(new Dimension(410, 230));
+        btnVisualizzaAndamentoClasse.setPreferredSize(new Dimension(390, 190));
         btnVisualizzaAndamentoClasse.setText("Visualizza andamento classe");
         btnVisualizzaAndamentoClasse.setVerticalAlignment(0);
         btnVisualizzaAndamentoClasse.setVerticalTextPosition(3);
@@ -193,7 +193,7 @@ public class SchermataVisualizzaInfo {
         btnVisualizzaLezioniSvolte.setHorizontalTextPosition(0);
         btnVisualizzaLezioniSvolte.setIconTextGap(16);
         btnVisualizzaLezioniSvolte.setOpaque(true);
-        btnVisualizzaLezioniSvolte.setPreferredSize(new Dimension(410, 230));
+        btnVisualizzaLezioniSvolte.setPreferredSize(new Dimension(390, 190));
         btnVisualizzaLezioniSvolte.setText("Visualizza lezioni svolte");
         btnVisualizzaLezioniSvolte.setVerticalAlignment(0);
         btnVisualizzaLezioniSvolte.setVerticalTextPosition(3);

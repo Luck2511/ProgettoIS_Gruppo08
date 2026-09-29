@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="it.unina.registroelettronico.Boundary.Swing.SchermataVisualizzaInfo">
-  <grid id="27dc6" binding="contentPane" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="contentPane" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="true" same-size-vertically="false" hgap="18" vgap="18">
     <margin top="28" left="30" bottom="28" right="30"/>
     <constraints>
-      <xy x="20" y="20" width="980" height="700"/>
+      <xy x="20" y="20" width="904" height="590"/>
     </constraints>
     <properties>
       <background color="-1116929"/>
       <opaque value="true"/>
-      <preferredSize width="980" height="700"/>
+      <preferredSize width="900" height="590"/>
     </properties>
     <border type="none"/>
     <children>
@@ -22,7 +22,7 @@
           <foreground color="-14730405"/>
           <horizontalAlignment value="0"/>
           <opaque value="true"/>
-          <preferredSize width="900" height="92"/>
+          <preferredSize width="840" height="92"/>
           <text value="&lt;html&gt;&lt;div style='text-align:center;'&gt;&lt;b&gt;&lt;font size='+4' color='#193B63'&gt;Visualizza informazioni classe&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;font color='#667788'&gt;Scegli l'informazione che vuoi consultare per la classe.&lt;/font&gt;&lt;/div&gt;&lt;/html&gt;"/>
           <verticalAlignment value="0"/>
         </properties>
@@ -41,7 +41,7 @@
           <horizontalTextPosition value="0"/>
           <iconTextGap value="16"/>
           <opaque value="true"/>
-          <preferredSize width="410" height="230"/>
+          <preferredSize width="390" height="190"/>
           <text value="Visualizza valutazioni studenti"/>
           <verticalAlignment value="0"/>
           <verticalTextPosition value="3"/>
@@ -60,7 +60,7 @@
           <horizontalTextPosition value="0"/>
           <iconTextGap value="16"/>
           <opaque value="true"/>
-          <preferredSize width="410" height="230"/>
+          <preferredSize width="390" height="190"/>
           <text value="Visualizza compiti assegnati"/>
           <verticalAlignment value="0"/>
           <verticalTextPosition value="3"/>
@@ -79,7 +79,7 @@
           <horizontalTextPosition value="0"/>
           <iconTextGap value="16"/>
           <opaque value="true"/>
-          <preferredSize width="410" height="230"/>
+          <preferredSize width="390" height="190"/>
           <text value="Visualizza andamento classe"/>
           <verticalAlignment value="0"/>
           <verticalTextPosition value="3"/>
@@ -98,7 +98,7 @@
           <horizontalTextPosition value="0"/>
           <iconTextGap value="16"/>
           <opaque value="true"/>
-          <preferredSize width="410" height="230"/>
+          <preferredSize width="390" height="190"/>
           <text value="Visualizza lezioni svolte"/>
           <verticalAlignment value="0"/>
           <verticalTextPosition value="3"/>
