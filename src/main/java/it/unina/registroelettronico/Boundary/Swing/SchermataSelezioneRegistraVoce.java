@@ -67,7 +67,7 @@ public class SchermataSelezioneRegistraVoce {
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(contentPane);
 
         SchermataRegistraValutazione schermataRegistraValutazione =
-                new SchermataRegistraValutazione();
+                new SchermataRegistraValutazione(classe);
 
         frame.setContentPane(schermataRegistraValutazione.getContentPane());
         frame.revalidate();
