@@ -35,8 +35,21 @@ public class ControllerRegistro {
 
     public boolean registraValutazione(String codice, String emailStudente, String tipologia, float voto, LocalDate data, String nota) {
 
-        //TODO MEMORIZZAZIONE PERSISTENZA E INVIO NOTIFICA
-        return true;
+        Registro registro =
+                sre.recuperaRegistro(codice);
+
+        if (registro == null) {//questo non sarà mai possibile
+            return false;
+        }
+
+        return registro.registraValutazione(
+                emailStudente,
+                tipologia,
+                voto,
+                data,
+                nota
+        );
+
     }
 
     public List<InfoValutazioneDTO> recuperaValutazioniStudente(String codice, String emailStudente) {

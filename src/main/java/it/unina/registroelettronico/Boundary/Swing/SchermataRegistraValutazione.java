@@ -216,12 +216,11 @@ public class SchermataRegistraValutazione {
 
         }
         else{
-            //TODO IN CASO DI ERRORE
             JOptionPane.showMessageDialog(
                     contentPane,
                     "Errore nella registrazione della valutazione."
             );
-            return;
+
         }
 
 

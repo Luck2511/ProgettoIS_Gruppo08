@@ -44,7 +44,7 @@ public class Registro {
     private List<Lezione> lezioniRegistrate=new ArrayList<>();
 
     @Transient //serve per non renderlo persistente e farlo ignorare da Hibernate
-    private GestorePersistenza gestorePersistenza;
+    private GestorePersistenza gestorePersistenza=new GestorePersistenza();
 
     public Registro(ClasseVirtuale classeVirtuale){
         this.classeVirtuale=classeVirtuale;
@@ -77,4 +77,101 @@ public class Registro {
         return valStudente;
 
     }
+
+    public Valutazione aggiungiValutazione(
+            LocalDate data,
+            TipologiaValutazione tipologia,
+            float voto,
+            String nota,
+            Studente studente
+    ) {
+
+        Valutazione valutazione =
+                new Valutazione(
+                        data,
+                        tipologia,
+                        voto,
+                        nota,
+                        studente
+                );
+
+        valutazioniRegistrate.add(valutazione);
+
+        return valutazione;
+    }
+
+    public void rimuoviValutazione(
+            Valutazione valutazione
+    ) {
+        valutazioniRegistrate.remove(valutazione);
+    }
+
+    public boolean registraValutazione(
+            String emailStudente,
+            String tipologia,
+            float voto,
+            LocalDate data,
+            String nota
+    ) {
+
+        // ricerca dello studente nella classe associata al registro
+        Studente studente = null;
+
+        for (Studente s : classeVirtuale.getStudenti()) {
+
+            if (s.getIndirizzoEmailIstituzionale()
+                    .equals(emailStudente)) {
+
+                studente = s;
+                break;
+            }
+        }
+
+        if (studente == null) {//scenario che non accadrà mai
+            return false;
+        }
+
+        // conversione della stringa nella tipologia enum
+        TipologiaValutazione tipoValutazione;
+
+        try {
+            tipoValutazione =
+                    TipologiaValutazione.valueOf(tipologia);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+
+        // creazione della valutazione
+        Valutazione valutazione =
+                new Valutazione(
+                        data,
+                        tipoValutazione,
+                        voto,
+                        nota,
+                        studente
+                );
+
+        //Ora stesso discorso del caso d'uso Iscrizione tramite codice classe
+
+
+        // modifica dello stato dell'Entity
+        valutazioniRegistrate.add(valutazione);
+
+        // persistenza
+        try {
+
+            gestorePersistenza.aggiorna(this);
+
+        } catch (RuntimeException e) {
+
+            // rollback dello stato in memoria
+            valutazioniRegistrate.remove(valutazione);
+
+            return false;
+        }
+
+        return true;
+
+    }
+
 }
