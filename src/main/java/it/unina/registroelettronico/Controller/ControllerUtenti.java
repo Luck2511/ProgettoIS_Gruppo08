@@ -6,7 +6,7 @@ import it.unina.registroelettronico.Entity.SistemaRegistroElettronico;
 
 public class ControllerUtenti {
 
-    private static ControllerUtenti instance;
+    private static ControllerUtenti instance=null;
     private SistemaRegistroElettronico sre;
 
     private ControllerUtenti(){

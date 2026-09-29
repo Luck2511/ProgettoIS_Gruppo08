@@ -17,4 +17,12 @@ public class InfoClasseDTO {
     public String getNome() {
         return nome;
     }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setCodice(String codice) {
+        this.codice = codice;
+    }
 }

@@ -207,7 +207,7 @@ public class SchermataDocente {
         // QUI VA RECUPERATO ControllerClassi TRAMITE getInstance() E CHIAMATO IL METODO PER CREARE LA CLASSE VIRTUALE.
         ControllerClassi controllerClassi=ControllerClassi.getInstance();
 
-        InfoClasseDTO classeCreata=null;
+        InfoClasseDTO classeCreata=new InfoClasseDTO("","");
         boolean esitoCasoDUso=true;
         try{
             esitoCasoDUso=controllerClassi.creaClasse(nomeClasse,classeCreata,docente);

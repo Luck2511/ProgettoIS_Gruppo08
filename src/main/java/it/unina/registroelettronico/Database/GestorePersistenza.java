@@ -34,6 +34,55 @@ public class GestorePersistenza {
         }
     }
 
+    public boolean salvaUtenteSeNonPresente(Object utente,String email) {
+
+        EntityManager em =
+                JpaUtil.getInstance().getEntityManager();
+
+        try {
+
+            String jpql =
+                    "SELECT COUNT(u) " +
+                            "FROM Utente u " +
+                            "WHERE u.indirizzoEmailIstituzionale = :email";
+
+            Long numeroUtenti =
+                    em.createQuery(jpql, Long.class)
+                            .setParameter(
+                                    "email",
+                                    email
+                            )
+                            .getSingleResult();
+
+            // Esiste già un utente con questa email
+            if (numeroUtenti == 1) {
+                return true;
+            }
+
+            em.getTransaction().begin();
+
+            em.persist(utente);
+
+            em.getTransaction().commit();
+
+            return true;
+
+        } catch (RuntimeException e) {
+
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+
+            e.printStackTrace();
+
+            return false;
+
+        } finally {
+            em.close();
+        }
+    }
+
+
 
     public boolean salva(Object oggetto) {
         EntityManager em = JpaUtil.getInstance().getEntityManager();

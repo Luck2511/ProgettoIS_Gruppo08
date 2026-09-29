@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ControllerRegistro {
 
-    private static ControllerRegistro instance;
+    private static ControllerRegistro instance=null;
     private SistemaRegistroElettronico sre;
 
 

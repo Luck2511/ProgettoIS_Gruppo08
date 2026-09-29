@@ -8,7 +8,7 @@ import jakarta.persistence.Persistence;
 
 public class JpaUtil {
 
-    private static JpaUtil instance;
+    private static JpaUtil instance=null;
 
     private EntityManagerFactory emf;
 

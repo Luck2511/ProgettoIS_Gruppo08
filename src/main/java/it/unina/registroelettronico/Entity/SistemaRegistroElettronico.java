@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class SistemaRegistroElettronico {
 
-    private static SistemaRegistroElettronico instance;
+    private static SistemaRegistroElettronico instance=null;
     private List<Utente> utenti;
     private List<ClasseVirtuale> classiVirtuali;
     private GestorePersistenza gestorePersistenza;
@@ -215,7 +215,7 @@ public class SistemaRegistroElettronico {
 
         utenti.add(docente);
 
-        return gestorePersistenza.salva(docente);
+        return gestorePersistenza.salvaUtenteSeNonPresente(docente,indirizzoEmailIstituzionale);
 
     }
 
@@ -224,7 +224,7 @@ public class SistemaRegistroElettronico {
 
         utenti.add(studente);
 
-        return gestorePersistenza.salva(studente);
+        return gestorePersistenza.salvaUtenteSeNonPresente(studente,indirizzoEmailIstituzionale);
 
     }
 }

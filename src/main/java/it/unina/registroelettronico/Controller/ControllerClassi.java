@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ControllerClassi {
 
-    private static ControllerClassi instance;
+    private static ControllerClassi instance=null;
     private SistemaRegistroElettronico sre;
 
     private ControllerClassi(){
@@ -48,7 +48,8 @@ public class ControllerClassi {
         String codice;
         codice=sre.generaCodiceUnivoco();
 
-        classeCreata=new InfoClasseDTO(nomeClasse,codice);
+        classeCreata.setNome(nomeClasse);
+        classeCreata.setCodice(codice);
 
         //memorizzazione classe (e registro) e gestione persistenza
         boolean esitoMemorizzazione =
