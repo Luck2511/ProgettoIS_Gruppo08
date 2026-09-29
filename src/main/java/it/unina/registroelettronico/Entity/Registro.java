@@ -15,19 +15,22 @@ public class Registro {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(mappedBy = "registro")
+    @OneToOne(mappedBy = "registro",
+            fetch = FetchType.EAGER)
     private ClasseVirtuale classeVirtuale;
 
     @OneToMany(
             cascade = CascadeType.ALL,
-            orphanRemoval = true
+            orphanRemoval = true,
+            fetch = FetchType.EAGER
     )
     @JoinColumn(name = "registro_id")
     private List<Compito> compitiRegistrati=new ArrayList<>();
 
     @OneToMany(
             cascade = CascadeType.ALL,
-            orphanRemoval = true
+            orphanRemoval = true,
+            fetch = FetchType.EAGER
     )
     @JoinColumn(name = "registro_id")
     private List<Valutazione> valutazioniRegistrate=new ArrayList<>();
@@ -35,7 +38,7 @@ public class Registro {
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true,
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
     @JoinColumn(name = "registro_id")
     private List<Lezione> lezioniRegistrate=new ArrayList<>();

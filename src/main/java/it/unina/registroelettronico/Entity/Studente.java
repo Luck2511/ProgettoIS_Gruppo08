@@ -9,7 +9,8 @@ import java.util.List;
 @PrimaryKeyJoinColumn(name = "id")
 public class Studente extends Utente{
 
-    @ManyToMany(mappedBy = "studenti")
+    @ManyToMany(mappedBy = "studenti",
+            fetch = FetchType.EAGER)
     private List<ClasseVirtuale> classiVirtuali=new ArrayList<>();
 
     public Studente(String indirizzoEmailIstituzionale, String cognome, String nome) {

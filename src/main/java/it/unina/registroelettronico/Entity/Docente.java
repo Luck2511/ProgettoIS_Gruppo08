@@ -9,7 +9,8 @@ import java.util.List;
 @PrimaryKeyJoinColumn(name = "id")
 public class Docente extends Utente{
 
-    @OneToMany(mappedBy = "docente")
+    @OneToMany(mappedBy = "docente",
+            fetch = FetchType.EAGER)
     private List<ClasseVirtuale> classiGestite=new ArrayList<>();;
 
 
@@ -35,5 +36,7 @@ public class Docente extends Utente{
 
 
     public void aggiungiClasse(ClasseVirtuale classeVirtuale) {
+        classiGestite.add(classeVirtuale);
+
     }
 }

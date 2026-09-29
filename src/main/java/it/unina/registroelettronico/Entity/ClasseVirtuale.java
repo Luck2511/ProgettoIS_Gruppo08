@@ -14,12 +14,13 @@ public class ClasseVirtuale {
     @Id
     private String codice;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,
+                fetch = FetchType.EAGER)
     @JoinColumn(name = "docente_id",
             nullable = false)
     private Docente docente;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "classe_studente",
             joinColumns =
@@ -31,7 +32,8 @@ public class ClasseVirtuale {
 
     @OneToOne(
             cascade = CascadeType.ALL,
-            orphanRemoval = true
+            orphanRemoval = true,
+            fetch = FetchType.EAGER
     )
     @JoinColumn(
             name = "registro_id",

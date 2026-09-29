@@ -25,7 +25,8 @@ public class Valutazione {
     private String notaDescrittiva;
 
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,
+            fetch = FetchType.EAGER)
     @JoinColumn(
             name = "studente_id",
             nullable = false
