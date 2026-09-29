@@ -19,5 +19,11 @@ public class DocenteDTO {
     }
 
 
+    public String getNome() {
+        return nome;
+    }
 
+    public String getCognome() {
+        return cognome;
+    }
 }

@@ -208,4 +208,23 @@ public class SistemaRegistroElettronico {
         return true;
 
     }
+
+    public boolean registraDocente(String indirizzoEmailIstituzionale, String nome, String cognome) {
+
+        Docente docente=new Docente(indirizzoEmailIstituzionale,cognome,nome);
+
+        utenti.add(docente);
+
+        return gestorePersistenza.salva(docente);
+
+    }
+
+    public boolean registraStudente(String indirizzoEmailIstituzionale, String nome, String cognome) {
+        Studente studente=new Studente(indirizzoEmailIstituzionale,cognome,nome);
+
+        utenti.add(studente);
+
+        return gestorePersistenza.salva(studente);
+
+    }
 }

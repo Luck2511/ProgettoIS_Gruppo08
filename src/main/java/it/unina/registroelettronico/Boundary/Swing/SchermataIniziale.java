@@ -3,6 +3,7 @@ package it.unina.registroelettronico.Boundary.Swing;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import it.unina.registroelettronico.Controller.ControllerUtenti;
 import it.unina.registroelettronico.DTO.DocenteDTO;
 import it.unina.registroelettronico.DTO.StudenteDTO;
 
@@ -71,16 +72,27 @@ public class SchermataIniziale {
 
         DocenteDTO docente=new DocenteDTO("Anna Rita","Fasolino","annarita.fasolino@unina.it");
 
+        //Vogliamo rendere persistente questo docente nel database
+        ControllerUtenti controllerUtenti=ControllerUtenti.getInstance();
 
-        SchermataDocente schermataDocente =
-                new SchermataDocente(docente);
+        boolean esitoRegistrazione=controllerUtenti.registraDocente(docente);
 
-        frame.setContentPane(
-                schermataDocente.getContentPane()
-        );
+        if(!esitoRegistrazione){
+            System.out.println("Errore nella registrazione fittizia");
+        }
+        else{
+            SchermataDocente schermataDocente =
+                    new SchermataDocente(docente);
 
-        frame.revalidate();
-        frame.repaint();
+            frame.setContentPane(
+                    schermataDocente.getContentPane()
+            );
+
+            frame.revalidate();
+            frame.repaint();
+        }
+
+
     }
 
 
@@ -99,17 +111,27 @@ public class SchermataIniziale {
 
         StudenteDTO studente=new StudenteDTO("Matteo","Cefalo","matteo.cefalo@studenti.unina.it");
 
+        //Vogliamo rendere persistente questo studente nel database
+        ControllerUtenti controllerUtenti=ControllerUtenti.getInstance();
 
-        SchermataStudente schermataStudente =
-                new SchermataStudente(studente);
+        boolean esitoRegistrazione=controllerUtenti.registraStudente(studente);
 
-        frame.setContentPane(
-                schermataStudente.getContentPane()
-        );
+        if(!esitoRegistrazione){
+            System.out.println("Errore nella registrazione fittizia");
+        }
+        else{
+            SchermataStudente schermataStudente =
+                    new SchermataStudente(studente);
+
+            frame.setContentPane(
+                    schermataStudente.getContentPane()
+            );
 
 
-        frame.revalidate();
-        frame.repaint();
+            frame.revalidate();
+            frame.repaint();
+        }
+
     }
 
     private void preparaRiquadro(
