@@ -85,7 +85,7 @@ public class SchermataDocente {
                 ControllerClassi.getInstance();
 
         List<InfoClasseDTO> classiRecuperate =
-                controllerClassi.recuperaClassi(
+                controllerClassi.recuperaClassiDocente(
                         docente.getIndirizzoEmailIstituzionale()
                 );
 

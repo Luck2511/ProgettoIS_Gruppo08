@@ -98,11 +98,11 @@ public class SistemaRegistroElettronico {
     }
 
 
-    public boolean cercaClasse(String codiceClasse, String nomeClasse) {
+    public boolean cercaClasse(String codiceClasse, StringBuilder nomeClasse) {
 
         for (ClasseVirtuale c : classiVirtuali) {
             if (c.getCodice().equals(codiceClasse)) {
-                nomeClasse = c.getNome();
+                nomeClasse.replace(0, nomeClasse.length(), c.getNome());
                 return true;
             }
         }
@@ -250,6 +250,99 @@ public class SistemaRegistroElettronico {
 
         return elencoClassi;
     }
+
+    public List<List<String>> recuperaClassiStudente(
+            String emailStudente
+    ) {
+
+        Studente studente =
+                cercaStudentePerEmail(emailStudente);
+
+        List<List<String>> elencoClassi =
+                new ArrayList<>();
+
+        for (ClasseVirtuale classe :
+                studente.getClassiVirtuali()) {
+
+            List<String> infoClasse =
+                    new ArrayList<>();
+
+            infoClasse.add(classe.getNome());
+            infoClasse.add(classe.getCodice());
+
+            elencoClassi.add(infoClasse);
+        }
+
+        return elencoClassi;
+    }
+
+    private Studente cercaStudentePerEmail(String emailStudente) {
+        for (Utente u : utenti) {
+            if (u instanceof Studente) {
+                if (u.getIndirizzoEmailIstituzionale().equals(emailStudente)) {
+                    return (Studente) u;
+                }
+            }
+        }
+
+        //Non è possibile che lo studente non venga trovato
+        return null;
+
+    }
+
+    public boolean iscriviStudenteAllaClasse(String codiceClasse,String emailStudente) {
+
+        ClasseVirtuale classe =
+                trovaClassePerCodice(codiceClasse);
+
+        Studente studente =
+                cercaStudentePerEmail(emailStudente);
+
+        if (classe == null || studente == null) {
+            return false;
+        }//in realtà lo studente deve esistere perché autenticato e la classe deve esistere perché il controllo
+        //in ControllerClassi è stato superato, quindi qui non dovrebbe mai ritornare false
+
+
+        // Modifichiamo il lato proprietario della ManyToMany
+        classe.aggiungiStudente(studente);
+
+        try {
+
+            /*
+             * ClasseVirtuale possiede la @JoinTable,
+             * quindi aggiornando la classe Hibernate
+             * aggiorna anche classe_studente.
+             */
+            gestorePersistenza.aggiorna(classe);
+
+        } catch (RuntimeException e) {
+
+            // Ripristiniamo anche lo stato in memoria
+            classe.rimuoviStudente(studente);
+
+            /*
+            * In Creazione Classe Virtuale non serviva il try catch per rollbackare gli aggiornamenti
+            * dell'Entity perché in realtà facevamo prima la persistenza in DB e poi la memorizzazione nell'entity
+            * e se la persistenza andava male restituivamo subito false. Invece in questo caso d'uso siamo costretti
+            * prima a lavorare nell'entity e poi nel DB perché ne ha bisogno Hibernate per gestire gli aggiornamenti
+            * in maniera automatica perché deve vedere che la relazione è cambiata. In più se guardiamo i metodi di
+            * GestorePersistenza, salva() che usiamo per la Creazione Classe Virtuale fa un catch di RunTimeException
+            * interno che restituisce false nell'handler, invece aggiorna() che usiamo qui rilancia l'eccezione che quindi
+            * va ricatturata
+            * */
+
+            return false;
+        }
+
+        //Aggiorniamo anche il lato inverso in memoria lato Entity.
+
+        studente.aggiungiClasse(classe);
+
+        return true;
+    }
+
+
 
 
 

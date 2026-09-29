@@ -78,4 +78,17 @@ public class ClasseVirtuale {
     public Registro getRegistro() {
         return registro;
     }
+
+    public void aggiungiStudente(Studente studente) {
+        studenti.add(studente);
+    }
+
+
+    public void rimuoviStudente(Studente studente) {
+        studenti.remove(studente);
+    }
+
+
+
+
 }

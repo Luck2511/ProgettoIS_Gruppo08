@@ -3,6 +3,7 @@ package it.unina.registroelettronico.Controller;
 
 import it.unina.registroelettronico.Controller.Exceptions.ClasseEsistenteException;
 import it.unina.registroelettronico.Controller.Exceptions.ClasseInesistenteException;
+import it.unina.registroelettronico.Controller.Exceptions.GiaIscrittoException;
 import it.unina.registroelettronico.DTO.DocenteDTO;
 import it.unina.registroelettronico.DTO.InfoClasseDTO;
 import it.unina.registroelettronico.DTO.StudenteDTO;
@@ -67,11 +68,11 @@ public class ControllerClassi {
 
     }
 
-    public boolean iscrizioneStudenteTramiteCodiceClasse(String codiceClasse, InfoClasseDTO classe, StudenteDTO studente) throws ClasseInesistenteException{
+    public boolean iscrizioneStudenteTramiteCodiceClasse(String codiceClasse, InfoClasseDTO classe, StudenteDTO studente) throws ClasseInesistenteException,GiaIscrittoException{
 
         //ricerca classe associata al codice
 
-        String nomeClasse="";
+        StringBuilder nomeClasse=new StringBuilder("");
 
         boolean esitoRicerca=sre.cercaClasse(codiceClasse,nomeClasse);//nomeClasse parametro d'uscita
         if(!esitoRicerca){
@@ -84,15 +85,28 @@ public class ControllerClassi {
 
         //se non è iscritto
         if(!isSubscribed){
-            //se lo studente non è iscritto aggiungiamo lo studente alla classe (memorizzazione e persistenza)
-            //TODO FARE QUESTA PARTE
 
-            classe=new InfoClasseDTO(nomeClasse,codiceClasse);
+            boolean esitoIscrizione =
+                    sre.iscriviStudenteAllaClasse(
+                            codiceClasse,
+                            studente.getIndirizzoEmailIstituzionale()
+                    );
+
+            if (!esitoIscrizione) {
+                return false;
+            }
+
+
+            classe.setNome(nomeClasse.toString());
+            classe.setCodice(codiceClasse);
+
             return true;
         }
+        else{
+            //se già iscritto
+            throw new GiaIscrittoException("Studente già iscritto");
+        }
 
-        //se già iscritto
-        return false;
 
 
     }
@@ -115,7 +129,7 @@ public class ControllerClassi {
 
     }
 
-    public List<InfoClasseDTO> recuperaClassi(String indirizzoEmailIstituzionale) {
+    public List<InfoClasseDTO> recuperaClassiDocente(String indirizzoEmailIstituzionale) {
 
         List<List<String>> elencoClassi =
                 sre.recuperaClassiDocente(indirizzoEmailIstituzionale);
@@ -134,5 +148,27 @@ public class ControllerClassi {
         }
 
         return classi;
+    }
+
+    public List<InfoClasseDTO> recuperaClassiStudente(String indirizzoEmailIstituzionale) {
+
+        List<List<String>> elencoClassi =
+                sre.recuperaClassiStudente(indirizzoEmailIstituzionale);
+
+        List<InfoClasseDTO> classi =
+                new ArrayList<>();
+
+        for (List<String> classe : elencoClassi) {
+
+            classi.add(
+                    new InfoClasseDTO(
+                            classe.get(0),
+                            classe.get(1)
+                    )
+            );
+        }
+
+        return classi;
+
     }
 }

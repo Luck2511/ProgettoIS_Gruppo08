@@ -23,6 +23,12 @@ public class Studente extends Utente{
 
     }
 
+    public List<ClasseVirtuale> getClassiVirtuali() {
+        return classiVirtuali;
+    }
 
+    public void aggiungiClasse(ClasseVirtuale classe) {
+        classiVirtuali.add(classe);
+    }
 
 }

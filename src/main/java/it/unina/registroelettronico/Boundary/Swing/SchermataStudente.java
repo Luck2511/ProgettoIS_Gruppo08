@@ -5,6 +5,7 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import it.unina.registroelettronico.Controller.ControllerClassi;
 import it.unina.registroelettronico.Controller.Exceptions.ClasseInesistenteException;
+import it.unina.registroelettronico.Controller.Exceptions.GiaIscrittoException;
 import it.unina.registroelettronico.DTO.InfoClasseDTO;
 import it.unina.registroelettronico.DTO.StudenteDTO;
 
@@ -68,6 +69,22 @@ public class SchermataStudente {
         btnIscrivitiClasse.setUI(new RoundedFillButtonUI(bluPrimario, bluHover, 22));
 
         btnIscrivitiClasse.addActionListener(this::apriDialogIscrizioneClasse);
+
+        caricaClassi();
+    }
+
+    private void caricaClassi() {
+
+        ControllerClassi controllerClassi =
+                ControllerClassi.getInstance();
+
+        List<InfoClasseDTO> classiRecuperate =
+                controllerClassi.recuperaClassiStudente(
+                        studente.getIndirizzoEmailIstituzionale()
+                );
+
+        classi.clear();
+        classi.addAll(classiRecuperate);
 
         aggiornaGrigliaClassi();
     }
@@ -197,35 +214,28 @@ public class SchermataStudente {
 
         ControllerClassi controllerClassi=ControllerClassi.getInstance();
 
-        InfoClasseDTO classe=null;//variabile d'uscita
+        InfoClasseDTO classe=new InfoClasseDTO("","");//variabile d'uscita
 
         boolean esitoCasoDUso=true;
         try{
-            esitoCasoDUso=controllerClassi.iscrizioneStudenteTramiteCodiceClasse(codiceClasse,classe,studente);
+            esitoCasoDUso=controllerClassi.iscrizioneStudenteTramiteCodiceClasse(codiceClasse,classe,studente);//classe è parametro d'uscita
         }
         catch(ClasseInesistenteException e){
             lblErrore.setText("Classe inesistente.");
             return;
         }
-
-        if(!esitoCasoDUso){
-            lblErrore.setText("Sei già iscritto.");
+        catch(GiaIscrittoException g){
+            lblErrore.setText("Sei già iscritto a questa classe.");
             return;
         }
 
-
-
-
-
-
-
-
-
+        if(!esitoCasoDUso){
+            lblErrore.setText("Errore nell'iscrizione alla classe.");
+            return;
+        }
 
         //se l'esito è true
-        classi.add(classe);
-
-        aggiornaGrigliaClassi();
+        caricaClassi();
         dialog.dispose();
     }
 
