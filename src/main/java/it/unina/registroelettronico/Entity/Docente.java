@@ -23,10 +23,10 @@ public class Docente extends Utente{
 
     }
 
-    public boolean verificaUnivocitaNome(String nomeClasse) {
+    public boolean verificaUnivocitaNome(String nome) {
 
         for(ClasseVirtuale c:classiGestite){
-            if(c.getNome().equals(nomeClasse))
+            if(c.getNome().equals(nome))
                 return false;
         }
 
@@ -35,8 +35,8 @@ public class Docente extends Utente{
     }
 
 
-    public void aggiungiClasse(ClasseVirtuale classeVirtuale) {
-        classiGestite.add(classeVirtuale);
+    public void aggiungiClasse(ClasseVirtuale classe) {
+        classiGestite.add(classe);
 
     }
 

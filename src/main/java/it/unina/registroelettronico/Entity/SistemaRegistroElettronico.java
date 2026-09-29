@@ -337,7 +337,7 @@ public class SistemaRegistroElettronico {
 
         //Aggiorniamo anche il lato inverso in memoria lato Entity.
 
-        studente.aggiungiClasse(classe);
+        studente.collegaClasse(classe);
 
         return true;
     }

@@ -27,7 +27,7 @@ public class Studente extends Utente{
         return classiVirtuali;
     }
 
-    public void aggiungiClasse(ClasseVirtuale classe) {
+    public void collegaClasse(ClasseVirtuale classe) {
         classiVirtuali.add(classe);
     }
 
