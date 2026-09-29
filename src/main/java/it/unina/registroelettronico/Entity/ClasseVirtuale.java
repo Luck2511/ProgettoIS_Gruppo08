@@ -50,7 +50,7 @@ public class ClasseVirtuale {
         // il Registro nasce insieme alla ClasseVirtuale.
         this.registro = new Registro(this);
 
-        docente.aggiungiClasse(this);
+        this.docente.aggiungiClasse(this);
 
 
 

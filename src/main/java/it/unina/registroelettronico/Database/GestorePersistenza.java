@@ -12,6 +12,29 @@ import java.util.Map;
 public class GestorePersistenza {
 
 
+    public <T> List<T> caricaTutti(Class<T> classe) {
+
+        EntityManager em =
+                JpaUtil.getInstance().getEntityManager();
+
+        try {
+
+            String jpql =
+                    "SELECT e FROM "
+                            + classe.getSimpleName()
+                            + " e";
+
+            TypedQuery<T> query =
+                    em.createQuery(jpql, classe);
+
+            return query.getResultList();
+
+        } finally {
+            em.close();
+        }
+    }
+
+
     public boolean salva(Object oggetto) {
         EntityManager em = JpaUtil.getInstance().getEntityManager();
 

@@ -19,8 +19,15 @@ public class SistemaRegistroElettronico {
 
     private SistemaRegistroElettronico() {
         gestorePersistenza = new GestorePersistenza();
-        // utenti = gestorePersistenza.caricaUtenti();
-        //   classiVirtuali = gestorePersistenza.caricaClassiVirtuali();
+        utenti =
+                gestorePersistenza.caricaTutti(
+                        Utente.class
+                );
+
+        classiVirtuali =
+                gestorePersistenza.caricaTutti(
+                        ClasseVirtuale.class
+                );
 
     }
 
@@ -186,8 +193,19 @@ public class SistemaRegistroElettronico {
                         nomeClasse,
                         codice,
                         docente
-                );
+                );//qui nel costruttore è aggiunta anche tra le classi del docente
 
-        return true;//temporaneo
+        boolean esitoPersistenza =
+                gestorePersistenza.salva(classe);
+
+        if (!esitoPersistenza) {
+            return false;
+        }
+
+        classiVirtuali.add(classe);
+
+
+        return true;
+
     }
 }
