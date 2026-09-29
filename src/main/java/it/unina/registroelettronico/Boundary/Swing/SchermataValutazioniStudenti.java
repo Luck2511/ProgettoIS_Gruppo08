@@ -183,6 +183,32 @@ public class SchermataValutazioniStudenti {
         pnlValutazioni.repaint();
     }
 
+
+    private String convertiVotoInStringa(float voto) {
+
+        int parteIntera = (int) voto;
+        float decimale = voto - parteIntera;
+
+        if (decimale == 0.0f) {
+            return String.valueOf(parteIntera);
+        }
+
+        if (decimale == 0.25f) {
+            return parteIntera + "+";
+        }
+
+        if (decimale == 0.5f) {
+            return parteIntera + "½";
+        }
+
+        if (decimale == 0.75f) {
+            return (parteIntera + 1) + "-";
+        }
+
+        return String.valueOf(voto);
+    }
+
+
     // CODICE AGGIUNTO: riceve l'elenco completo delle valutazioni
     // restituito dal Controller e le visualizza una per una nel pannello.
     private void aggiornaElencoValutazioni(
@@ -216,7 +242,7 @@ public class SchermataValutazioniStudenti {
                         String.valueOf(valutazione.getData()),
                         valutazione.getTipologia(),
                         valutazione.getNotaDescrittiva(),
-                        String.valueOf(valutazione.getVoto())
+                        convertiVotoInStringa(valutazione.getVoto())
                 );
 
                 pnlValutazioni.add(card);
