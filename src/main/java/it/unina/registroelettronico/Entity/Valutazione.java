@@ -33,6 +33,14 @@ public class Valutazione {
     private Studente studente;
 
 
+    public Valutazione(LocalDate data, TipologiaValutazione tipologia, float voto, String notaDescrittiva, Studente studente) {
+        this.data = data;
+        this.tipologia = tipologia;
+        this.voto = voto;
+        this.notaDescrittiva = notaDescrittiva;
+        this.studente = studente;
+    }
+
     public Valutazione(){
 
     }

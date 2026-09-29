@@ -21,6 +21,16 @@ public class Compito {
     @Column(nullable = false)
     private LocalDate dataAssegnazione;
 
+    @Column(nullable = false)
+    private LocalDate dataScadenza;
+
+    public Compito(String titolo, String descrizione, LocalDate dataAssegnazione, LocalDate dataScadenza) {
+        this.titolo = titolo;
+        this.descrizione = descrizione;
+        this.dataAssegnazione = dataAssegnazione;
+        this.dataScadenza=dataScadenza;
+    }
+
     public Compito(){
 
     }

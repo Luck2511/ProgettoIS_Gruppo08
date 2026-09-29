@@ -2,6 +2,7 @@ package it.unina.registroelettronico.Entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,7 +27,7 @@ public class ClasseVirtuale {
             inverseJoinColumns =
                 @JoinColumn(name = "studente_id")
     )
-    private List<Studente> studenti;
+    private List<Studente> studenti=new ArrayList<>();
 
     @OneToOne(
             cascade = CascadeType.ALL,
@@ -45,9 +46,13 @@ public class ClasseVirtuale {
         this.codice=codice;
         this.docente=docente;
 
-        //studenti poi ci pensi
+        // Composizione ClasseVirtuale - Registro:
+        // il Registro nasce insieme alla ClasseVirtuale.
+        this.registro = new Registro(this);
 
-        //pure registro poi ci pensi
+        docente.aggiungiClasse(this);
+
+
 
     }
 

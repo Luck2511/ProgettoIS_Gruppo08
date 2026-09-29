@@ -21,6 +21,11 @@ public class Lezione {
     @Column(length = 2000)
     private String descrizione;
 
+    public Lezione(LocalDate data, String argomento, String descrizione) {
+        this.data = data;
+        this.argomento = argomento;
+        this.descrizione = descrizione;
+    }
 
     public Lezione(){
 

@@ -208,15 +208,19 @@ public class SchermataDocente {
         ControllerClassi controllerClassi=ControllerClassi.getInstance();
 
         InfoClasseDTO classeCreata=null;
-
+        boolean esitoCasoDUso=true;
         try{
-            boolean esitoCasoDUso=controllerClassi.creaClasse(nomeClasse,classeCreata,docente);
+            esitoCasoDUso=controllerClassi.creaClasse(nomeClasse,classeCreata,docente);
         }
         catch(ClasseEsistenteException e){
             lblErrore.setText("Nome già in uso per un'altra classe.");
             return;
         }
 
+        if(!esitoCasoDUso){
+            lblErrore.setText("Errore nella creazione della classe");
+            return;
+        }
 
         classi.add(classeCreata);
         aggiornaGrigliaClassi();

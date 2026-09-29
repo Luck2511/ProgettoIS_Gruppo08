@@ -23,14 +23,14 @@ public class Registro {
             orphanRemoval = true
     )
     @JoinColumn(name = "registro_id")
-    private List<Compito> compitiRegistrati;
+    private List<Compito> compitiRegistrati=new ArrayList<>();
 
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     @JoinColumn(name = "registro_id")
-    private List<Valutazione> valutazioniRegistrate;
+    private List<Valutazione> valutazioniRegistrate=new ArrayList<>();
 
     @OneToMany(
             cascade = CascadeType.ALL,
@@ -38,11 +38,14 @@ public class Registro {
             fetch = FetchType.LAZY
     )
     @JoinColumn(name = "registro_id")
-    private List<Lezione> lezioniRegistrate;
+    private List<Lezione> lezioniRegistrate=new ArrayList<>();
 
     @Transient //serve per non renderlo persistente e farlo ignorare da Hibernate
     private GestorePersistenza gestorePersistenza;
 
+    public Registro(ClasseVirtuale classeVirtuale){
+        this.classeVirtuale=classeVirtuale;
+    }
 
     public Registro(){
 

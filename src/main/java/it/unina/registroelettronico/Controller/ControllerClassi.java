@@ -51,11 +51,16 @@ public class ControllerClassi {
         classeCreata=new InfoClasseDTO(nomeClasse,codice);
 
         //memorizzazione classe (e registro) e gestione persistenza
-        //TODO FARE QUESTA PARTE
+        boolean esitoMemorizzazione =
+                sre.memorizzaClasse(
+                        nomeClasse,
+                        codice,
+                        indirizzoEmail
+                );
 
-        //in caso di errori nella memorizzazione o nella persistenza fare qui un return false
-
-        //conferma creazione classe
+        if (!esitoMemorizzazione) {
+            return false;
+        }
 
         return true;
 

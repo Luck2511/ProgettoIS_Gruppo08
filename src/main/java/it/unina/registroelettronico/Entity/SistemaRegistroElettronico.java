@@ -17,7 +17,7 @@ public class SistemaRegistroElettronico {
     private GestorePersistenza gestorePersistenza;
 
 
-    public SistemaRegistroElettronico() {
+    private SistemaRegistroElettronico() {
         gestorePersistenza = new GestorePersistenza();
         // utenti = gestorePersistenza.caricaUtenti();
         //   classiVirtuali = gestorePersistenza.caricaClassiVirtuali();
@@ -171,5 +171,23 @@ public class SistemaRegistroElettronico {
         ClasseVirtuale c=trovaClassePerCodice(codice);
         return c.getRegistro();
 
+    }
+
+    public boolean memorizzaClasse(String nomeClasse, String codice, String indirizzoEmail) {
+        Docente docente =
+                cercaDocentePerEmail(indirizzoEmail);
+
+        if (docente == null) {//non accadrà mai
+            return false;
+        }
+
+        ClasseVirtuale classe =
+                new ClasseVirtuale(
+                        nomeClasse,
+                        codice,
+                        docente
+                );
+
+        return true;//temporaneo
     }
 }

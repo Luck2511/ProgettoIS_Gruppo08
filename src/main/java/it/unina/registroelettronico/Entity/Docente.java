@@ -2,6 +2,7 @@ package it.unina.registroelettronico.Entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -9,12 +10,12 @@ import java.util.List;
 public class Docente extends Utente{
 
     @OneToMany(mappedBy = "docente")
-    private List<ClasseVirtuale> classiGestite;
+    private List<ClasseVirtuale> classiGestite=new ArrayList<>();;
 
 
     public Docente(String indirizzoEmailIstituzionale, String cognome, String nome) {
         super(indirizzoEmailIstituzionale,cognome,nome);
-        //VEDI per le classi
+
     }
 
     public Docente(){
@@ -33,4 +34,6 @@ public class Docente extends Utente{
     }
 
 
+    public void aggiungiClasse(ClasseVirtuale classeVirtuale) {
+    }
 }
