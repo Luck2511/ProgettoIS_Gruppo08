@@ -187,6 +187,13 @@ public class SchermataRegistraValutazione {
             );
             return;
         }
+        else if(data.isAfter(LocalDate.now())){
+            JOptionPane.showMessageDialog(
+                    contentPane,
+                    "Impossibile selezionare data futura."
+            );
+            return;
+        }
 
         float votoNumerico=convertiVoto(voto);
 
