@@ -69,13 +69,30 @@ public class SchermataDocente {
 
         //btnCreaClasse.addActionListener(this::apriDialogCreazioneClasse);
 
-        aggiornaGrigliaClassi();
+        caricaClassi();
         btnCreaClasse.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 apriDialogCreazioneClasse(e);
             }
         });
+    }
+
+
+    private void caricaClassi() {
+
+        ControllerClassi controllerClassi =
+                ControllerClassi.getInstance();
+
+        List<InfoClasseDTO> classiRecuperate =
+                controllerClassi.recuperaClassi(
+                        docente.getIndirizzoEmailIstituzionale()
+                );
+
+        classi.clear();
+        classi.addAll(classiRecuperate);
+
+        aggiornaGrigliaClassi();
     }
 
 
@@ -222,8 +239,7 @@ public class SchermataDocente {
             return;
         }
 
-        classi.add(classeCreata);
-        aggiornaGrigliaClassi();
+        caricaClassi();
         dialog.dispose();
     }
 

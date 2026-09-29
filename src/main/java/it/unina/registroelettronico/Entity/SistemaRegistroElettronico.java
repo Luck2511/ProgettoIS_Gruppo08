@@ -227,4 +227,30 @@ public class SistemaRegistroElettronico {
         return gestorePersistenza.salvaUtenteSeNonPresente(studente,indirizzoEmailIstituzionale);
 
     }
+
+    public List<List<String>> recuperaClassiDocente(String emailDocente) {
+
+        Docente docente =
+                cercaDocentePerEmail(emailDocente);
+
+        List<List<String>> elencoClassi =
+                new ArrayList<>();
+
+        for (ClasseVirtuale classe :
+                docente.getClassiGestite()) {
+
+            List<String> infoClasse =
+                    new ArrayList<>();
+
+            infoClasse.add(classe.getNome());
+            infoClasse.add(classe.getCodice());
+
+            elencoClassi.add(infoClasse);
+        }
+
+        return elencoClassi;
+    }
+
+
+
 }

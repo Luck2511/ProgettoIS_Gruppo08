@@ -114,4 +114,25 @@ public class ControllerClassi {
         return studenti;
 
     }
+
+    public List<InfoClasseDTO> recuperaClassi(String indirizzoEmailIstituzionale) {
+
+        List<List<String>> elencoClassi =
+                sre.recuperaClassiDocente(indirizzoEmailIstituzionale);
+
+        List<InfoClasseDTO> classi =
+                new ArrayList<>();
+
+        for (List<String> classe : elencoClassi) {
+
+            classi.add(
+                    new InfoClasseDTO(
+                            classe.get(0),
+                            classe.get(1)
+                    )
+            );
+        }
+
+        return classi;
+    }
 }

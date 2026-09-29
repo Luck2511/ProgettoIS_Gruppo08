@@ -39,4 +39,9 @@ public class Docente extends Utente{
         classiGestite.add(classeVirtuale);
 
     }
+
+    public List<ClasseVirtuale> getClassiGestite() {
+
+        return classiGestite;
+    }
 }
