@@ -240,7 +240,7 @@ public class SchermataValutazioniStudenti {
 
                 JPanel card = creaCardValutazione(
                         String.valueOf(valutazione.getData()),
-                        valutazione.getTipologia(),
+                        valutazione.getTipologia().replace("_"," "),
                         valutazione.getNotaDescrittiva(),
                         convertiVotoInStringa(valutazione.getVoto())
                 );

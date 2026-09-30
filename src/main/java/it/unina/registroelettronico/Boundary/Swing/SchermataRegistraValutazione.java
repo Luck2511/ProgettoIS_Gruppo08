@@ -119,7 +119,7 @@ public class SchermataRegistraValutazione {
 
         if (tipologie != null) {
             for (String tipologia : tipologie) {
-                model.addElement(tipologia);
+                model.addElement(tipologia.replace("_"," "));
             }
         }
 
@@ -209,7 +209,7 @@ public class SchermataRegistraValutazione {
         boolean esitoCasoDUso=controllerRegistro.registraValutazione(
                 classe.getCodice(),
                 emailStudente,
-                tipologia,
+                tipologia.replace(" ","_"),
                 votoNumerico,
                 data,
                 nota
