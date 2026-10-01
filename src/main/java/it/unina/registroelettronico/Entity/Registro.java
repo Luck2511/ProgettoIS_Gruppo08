@@ -160,7 +160,20 @@ public class Registro {
         // persistenza
         try {
 
-            gestorePersistenza.aggiorna(this);
+            Registro registroAggiornato =
+                    gestorePersistenza.aggiorna(this);
+
+            /*
+             Va risincronizzato in questo punto con le valutazioni registrate nel database perché
+             quando prima del try-catch facciamo valutazioniRegistrate.add(valutazione) non assegniamo l'id e
+             quindi hibernate vede l'id null e non sa che quell'oggetto Valutazione è già stato memorizzato
+             in maniere persistente, perciò in successive registrazioni nel fare il merge() andrebbe a rimemorizzare nel database
+             valutazioni già memorizzate al suo interno
+             */
+            this.valutazioniRegistrate =
+                    new ArrayList<>(
+                            registroAggiornato.valutazioniRegistrate
+                    );
 
         } catch (RuntimeException e) {
 
