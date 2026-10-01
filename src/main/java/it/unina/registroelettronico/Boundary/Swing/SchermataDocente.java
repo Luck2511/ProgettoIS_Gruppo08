@@ -504,17 +504,6 @@ public class SchermataDocente {
         button.setUI(new RoundedFillButtonUI(bluPrimario, bluHover, 20));
     }
 
-    /*private String generaCodiceClasse() {
-        String caratteri = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-        Random random = new Random();
-        StringBuilder sb = new StringBuilder("CLS-");
-
-        for (int i = 0; i < 6; i++) {
-            sb.append(caratteri.charAt(random.nextInt(caratteri.length())));
-        }
-
-        return sb.toString();
-    }*/
 
     public JPanel getContentPane() {
         Main.applicaRenderingTesto(contentPane);
