@@ -41,6 +41,8 @@ public class SchermataValutazioniStudenti {
     public SchermataValutazioniStudenti(InfoClasseDTO classe) {
 
         this.classe=classe;
+        aggiornaIntestazioneClasse();
+        configuraNavigazioneIndietro();
 
         cmbStudente.setModel(new DefaultComboBoxModel<>(
                 new String[]{"Seleziona studente"}
@@ -83,6 +85,31 @@ public class SchermataValutazioniStudenti {
 
     //stessa logica usata in SchermataRegistraValutazione
     //per recuperare dal ControllerClassi gli studenti della classe.
+    private void configuraNavigazioneIndietro() {
+        contentPane.remove(lblHeader);
+        JPanel header = Main.creaIntestazioneConIndietro(lblHeader);
+        contentPane.add(
+                header,
+                new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+                        GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED,
+                        null, null, null, 0, false)
+        );
+    }
+
+    private void aggiornaIntestazioneClasse() {
+        lblHeader.setText(
+                "<html><div style='text-align:center;'>"
+                        + "<b><font size='+4' color='#193B63'>Valutazioni studenti</font></b>"
+                        + "<br><font color='#667788'>Seleziona uno studente per visualizzare le valutazioni registrate nella classe.</font>"
+                        + "<br><b><font color='#2F80ED'>Classe: "
+                        + classe.getNome()
+                        + " &nbsp;&bull;&nbsp; "
+                        + classe.getCodice()
+                        + "</font></b>"
+                        + "</div></html>"
+        );
+    }
+
     private void caricaStudenti(String codiceClasse) {
 
         ControllerClassi controllerClassi =
@@ -330,10 +357,12 @@ public class SchermataValutazioniStudenti {
         card.add(informazioni, BorderLayout.CENTER);
         card.add(badge, BorderLayout.EAST);
 
+        Main.applicaRenderingTesto(card);
         return card;
     }
 
     public JPanel getContentPane() {
+        Main.applicaRenderingTesto(contentPane);
         return contentPane;
     }
 

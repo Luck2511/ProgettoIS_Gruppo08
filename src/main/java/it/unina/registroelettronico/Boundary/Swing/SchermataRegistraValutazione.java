@@ -64,6 +64,8 @@ public class SchermataRegistraValutazione {
     public SchermataRegistraValutazione(InfoClasseDTO classe) {
 
         this.classe=classe;
+        configuraNavigazioneIndietro();
+        aggiornaIntestazioneClasse();
 
         cmbTipologia.setModel(new DefaultComboBoxModel<>(
                 new String[]{"Seleziona tipologia"}
@@ -94,6 +96,17 @@ public class SchermataRegistraValutazione {
                 registraValutazione();
             }
         });
+    }
+
+    private void configuraNavigazioneIndietro() {
+        contentPane.remove(lblHeader);
+        JPanel header = Main.creaIntestazioneConIndietro(lblHeader);
+        contentPane.add(
+                header,
+                new GridConstraints(0, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+                        GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED,
+                        null, null, null, 0, false)
+        );
     }
 
     private void caricaTipologieValutazione() {
@@ -221,6 +234,8 @@ public class SchermataRegistraValutazione {
                     "Registrazione valutazione completata con successo."
             );
 
+            resetFormValutazione();
+
         }
         else{
             JOptionPane.showMessageDialog(
@@ -232,6 +247,32 @@ public class SchermataRegistraValutazione {
 
 
 
+    }
+
+    private void aggiornaIntestazioneClasse() {
+        lblHeader.setText(
+                "<html><div style='text-align:center;'>"
+                        + "<b><font size='+4' color='#193B63'>Registra valutazione</font></b>"
+                        + "<br><font color='#667788'>Inserisci i dati della valutazione dello studente.</font>"
+                        + "<br><b><font color='#2F80ED'>Classe: "
+                        + classe.getNome()
+                        + " &nbsp;&bull;&nbsp; "
+                        + classe.getCodice()
+                        + "</font></b>"
+                        + "</div></html>"
+        );
+    }
+
+    private void resetFormValutazione() {
+        cmbTipologia.setSelectedIndex(0);
+        cmbVoto.setSelectedIndex(0);
+        cmbStudente.setSelectedIndex(0);
+
+        dataSelezionata = null;
+        txtData.setText("");
+        txtNota.setText("");
+
+        cmbTipologia.requestFocusInWindow();
     }
 
     private float convertiVoto(String voto) {
@@ -589,6 +630,7 @@ public class SchermataRegistraValutazione {
     }
 
     public JPanel getContentPane() {
+        Main.applicaRenderingTesto(contentPane);
         return contentPane;
     }
 

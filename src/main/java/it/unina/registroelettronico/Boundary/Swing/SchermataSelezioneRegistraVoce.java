@@ -38,6 +38,7 @@ public class SchermataSelezioneRegistraVoce {
     public SchermataSelezioneRegistraVoce(InfoClasseDTO classe) {
 
         this.classe = classe;
+        configuraNavigazioneIndietro();
 
         cardCompito.setIcon(
                 new FlatSVGIcon("icons/compito.svg", 112, 112)
@@ -63,15 +64,28 @@ public class SchermataSelezioneRegistraVoce {
         });
     }
 
+    private void configuraNavigazioneIndietro() {
+        contentPane.remove(lblHeader);
+        JPanel header = Main.creaIntestazioneConIndietro(lblHeader);
+        contentPane.add(
+                header,
+                new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+                        GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED,
+                        null, null, null, 0, false)
+        );
+    }
+
     private void apriSchermataRegistraValutazione() {
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(contentPane);
 
         SchermataRegistraValutazione schermataRegistraValutazione =
                 new SchermataRegistraValutazione(classe);
 
-        frame.setContentPane(schermataRegistraValutazione.getContentPane());
-        frame.revalidate();
-        frame.repaint();
+        Main.apriSchermata(
+                frame,
+                getContentPane(),
+                schermataRegistraValutazione.getContentPane()
+        );
     }
 
     private void preparaCard(JButton card) {
@@ -97,6 +111,7 @@ public class SchermataSelezioneRegistraVoce {
     }
 
     public JPanel getContentPane() {
+        Main.applicaRenderingTesto(contentPane);
         return contentPane;
     }
 

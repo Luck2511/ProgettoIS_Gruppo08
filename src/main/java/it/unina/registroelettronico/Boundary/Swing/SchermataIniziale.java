@@ -84,12 +84,11 @@ public class SchermataIniziale {
             SchermataDocente schermataDocente =
                     new SchermataDocente(docente);
 
-            frame.setContentPane(
+            Main.apriSchermata(
+                    frame,
+                    contentPane,
                     schermataDocente.getContentPane()
             );
-
-            frame.revalidate();
-            frame.repaint();
         }
 
 
@@ -123,13 +122,11 @@ public class SchermataIniziale {
             SchermataStudente schermataStudente =
                     new SchermataStudente(studente);
 
-            frame.setContentPane(
+            Main.apriSchermata(
+                    frame,
+                    contentPane,
                     schermataStudente.getContentPane()
             );
-
-
-            frame.revalidate();
-            frame.repaint();
         }
 
     }
@@ -168,6 +165,7 @@ public class SchermataIniziale {
     }
 
     public JPanel getContentPane() {
+        Main.applicaRenderingTesto(contentPane);
         return contentPane;
     }
 

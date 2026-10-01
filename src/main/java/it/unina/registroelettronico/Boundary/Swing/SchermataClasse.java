@@ -37,6 +37,9 @@ public class SchermataClasse {
         lblNomeClasse.setText(classe.getNome());
         lblCodiceClasse.setText("Codice classe: " + classe.getCodice());
 
+        configuraIntestazioneClasse();
+        preparaElencoStudenti();
+
         caricaStudenti(classe.getCodice());
 
         btnApriRegistro.addActionListener(new ActionListener() {
@@ -52,9 +55,11 @@ public class SchermataClasse {
 
         SchermataRegistro schermataRegistro = new SchermataRegistro(classe);
 
-        frame.setContentPane(schermataRegistro.getContentPane());
-        frame.revalidate();
-        frame.repaint();
+        Main.apriSchermata(
+                frame,
+                getContentPane(),
+                schermataRegistro.getContentPane()
+        );
     }
 
     private void caricaStudenti(String codice) {
@@ -67,18 +72,164 @@ public class SchermataClasse {
         aggiornaElencoStudenti(studenti);
     }
 
+    private void configuraIntestazioneClasse() {
+        Container parent = lblNomeClasse.getParent();
+        if (!(parent instanceof JPanel pannelloHeader)) {
+            return;
+        }
+
+        pannelloHeader.remove(lblNomeClasse);
+        pannelloHeader.remove(lblCodiceClasse);
+        pannelloHeader.remove(lblSottotitolo);
+
+        // Nessun margine iniziale: il codice resta allineato verticalmente
+        // con il nome della classe e con il sottotitolo.
+        JPanel rigaCodice = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        rigaCodice.setOpaque(false);
+        rigaCodice.setAlignmentX(Component.LEFT_ALIGNMENT);
+        rigaCodice.add(lblCodiceClasse);
+        rigaCodice.add(Box.createHorizontalStrut(10));
+        rigaCodice.add(Main.creaPulsanteCopiaCodice(classe.getCodice()));
+
+        JPanel testi = new JPanel();
+        testi.setOpaque(false);
+        testi.setLayout(new BoxLayout(testi, BoxLayout.Y_AXIS));
+        lblNomeClasse.setAlignmentX(Component.LEFT_ALIGNMENT);
+        lblSottotitolo.setAlignmentX(Component.LEFT_ALIGNMENT);
+        testi.add(lblNomeClasse);
+        testi.add(Box.createRigidArea(new Dimension(0, 5)));
+        testi.add(rigaCodice);
+        testi.add(Box.createRigidArea(new Dimension(0, 5)));
+        testi.add(lblSottotitolo);
+
+        // Il pulsante resta dentro l'header bianco ed è centrato verticalmente.
+        JPanel sinistra = new JPanel(new GridBagLayout());
+        sinistra.setOpaque(false);
+        sinistra.setPreferredSize(new Dimension(40, 40));
+        sinistra.add(Main.creaPulsanteIndietro());
+
+        JPanel blocco = new JPanel(new BorderLayout(14, 0));
+        blocco.setOpaque(false);
+        blocco.add(sinistra, BorderLayout.WEST);
+        blocco.add(testi, BorderLayout.CENTER);
+
+        pannelloHeader.add(
+                blocco,
+                new GridConstraints(
+                        0, 0, 3, 1,
+                        GridConstraints.ANCHOR_WEST,
+                        GridConstraints.FILL_HORIZONTAL,
+                        GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW,
+                        GridConstraints.SIZEPOLICY_FIXED,
+                        null, null, null, 0, false
+                )
+        );
+
+        pannelloHeader.revalidate();
+        pannelloHeader.repaint();
+    }
+
+    private void preparaElencoStudenti() {
+        Color sfondoElenco = new Color(248, 251, 255);
+        Color bordo = new Color(218, 232, 244);
+        Color blu = new Color(47, 128, 237);
+        Color testo = new Color(25, 59, 99);
+        Color secondario = new Color(102, 119, 136);
+
+        scrollStudenti.setBorder(BorderFactory.createEmptyBorder());
+        scrollStudenti.getViewport().setBackground(sfondoElenco);
+        scrollStudenti.getVerticalScrollBar().setUnitIncrement(16);
+
+        lstStudenti.setOpaque(false);
+        lstStudenti.setBackground(sfondoElenco);
+        lstStudenti.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+        lstStudenti.setFixedCellHeight(72);
+        lstStudenti.setFocusable(false);
+        lstStudenti.setRequestFocusEnabled(false);
+
+        // L'elenco è solo informativo: nessuna selezione o interazione al click.
+        lstStudenti.setSelectionModel(new DefaultListSelectionModel() {
+            @Override
+            public void setSelectionInterval(int index0, int index1) {
+                // Nessuna selezione.
+            }
+
+            @Override
+            public void addSelectionInterval(int index0, int index1) {
+                // Nessuna selezione.
+            }
+        });
+
+        lstStudenti.setCellRenderer(new ListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(
+                    JList list, Object value, int index,
+                    boolean isSelected, boolean cellHasFocus
+            ) {
+                StudenteDTO studente = (StudenteDTO) value;
+
+                JPanel card = new JPanel(new BorderLayout(12, 0)) {
+                    @Override
+                    protected void paintComponent(Graphics g) {
+                        Graphics2D g2 = (Graphics2D) g.create();
+                        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                        // Aspetto volutamente statico: niente hover e niente stato selezionato.
+                        g2.setColor(Color.WHITE);
+                        g2.fillRoundRect(1, 3, getWidth() - 3, getHeight() - 7, 18, 18);
+                        g2.setColor(bordo);
+                        g2.setStroke(new BasicStroke(1.2f));
+                        g2.drawRoundRect(1, 3, getWidth() - 3, getHeight() - 7, 18, 18);
+                        g2.dispose();
+                    }
+                };
+
+                card.setOpaque(false);
+                card.setBorder(BorderFactory.createEmptyBorder(12, 16, 12, 16));
+
+                JLabel indicatore = new JLabel("●", SwingConstants.CENTER);
+                indicatore.setForeground(blu);
+                indicatore.setFont(indicatore.getFont().deriveFont(Font.BOLD, 16f));
+                indicatore.setPreferredSize(new Dimension(18, 18));
+
+                JPanel testi = new JPanel();
+                testi.setOpaque(false);
+                testi.setLayout(new BoxLayout(testi, BoxLayout.Y_AXIS));
+
+                JLabel nome = new JLabel(studente.getNome() + " " + studente.getCognome());
+                nome.setForeground(testo);
+                nome.setFont(nome.getFont().deriveFont(Font.BOLD, 14f));
+
+                JLabel email = new JLabel(studente.getIndirizzoEmailIstituzionale());
+                email.setForeground(secondario);
+                email.setFont(email.getFont().deriveFont(Font.PLAIN, 12f));
+
+                testi.add(nome);
+                testi.add(Box.createRigidArea(new Dimension(0, 4)));
+                testi.add(email);
+
+                card.add(indicatore, BorderLayout.WEST);
+                card.add(testi, BorderLayout.CENTER);
+
+                Main.applicaRenderingTesto(card);
+                return card;
+            }
+        });
+    }
+
     private void aggiornaElencoStudenti(List<StudenteDTO> studenti) {
-        DefaultListModel<String> model = new DefaultListModel<>();
+        DefaultListModel<StudenteDTO> model = new DefaultListModel<>();
 
         for (StudenteDTO studente : studenti) {
-            model.addElement(studente.getNome() + " " + studente.getCognome()
-                    + " - " + studente.getIndirizzoEmailIstituzionale());
+            model.addElement(studente);
         }
 
         lstStudenti.setModel(model);
+        Main.applicaRenderingTesto(lstStudenti);
     }
 
     public JPanel getContentPane() {
+        Main.applicaRenderingTesto(contentPane);
         return contentPane;
     }
 

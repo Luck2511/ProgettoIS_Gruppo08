@@ -18,6 +18,8 @@ import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -54,11 +56,21 @@ public class SchermataDocente {
     public SchermataDocente(DocenteDTO docente) {
 
         this.docente=docente;
+        configuraIntestazioneConIndietro();
 
         scrollClassi.setBorder(null);
         scrollClassi.getVerticalScrollBar().setUnitIncrement(18);
         scrollClassi.getViewport().setOpaque(true);
         scrollClassi.getViewport().setBackground(sfondoAzzurro);
+        scrollClassi.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        // La griglia ricalcola il numero di colonne in base alla larghezza realmente disponibile.
+        scrollClassi.getViewport().addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                aggiornaGrigliaClassi(false);
+            }
+        });
 
         btnCreaClasse.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnCreaClasse.setFocusPainted(false);
@@ -78,6 +90,48 @@ public class SchermataDocente {
         });
     }
 
+
+    private void configuraIntestazioneConIndietro() {
+        Container parent = lblTitolo.getParent();
+        if (!(parent instanceof JPanel pannelloHeader)) {
+            return;
+        }
+
+        pannelloHeader.remove(lblTitolo);
+        pannelloHeader.remove(lblSottotitolo);
+
+        JPanel testi = new JPanel();
+        testi.setOpaque(false);
+        testi.setLayout(new BoxLayout(testi, BoxLayout.Y_AXIS));
+        lblTitolo.setAlignmentX(Component.LEFT_ALIGNMENT);
+        lblSottotitolo.setAlignmentX(Component.LEFT_ALIGNMENT);
+        testi.add(lblTitolo);
+        testi.add(Box.createRigidArea(new Dimension(0, 4)));
+        testi.add(lblSottotitolo);
+
+        // Il pulsante resta dentro l'header bianco ed è centrato verticalmente.
+        JPanel sinistra = new JPanel(new GridBagLayout());
+        sinistra.setOpaque(false);
+        sinistra.setPreferredSize(new Dimension(40, 40));
+        sinistra.add(Main.creaPulsanteIndietro());
+
+        JPanel blocco = new JPanel(new BorderLayout(14, 0));
+        blocco.setOpaque(false);
+        blocco.add(sinistra, BorderLayout.WEST);
+        blocco.add(testi, BorderLayout.CENTER);
+
+        pannelloHeader.add(
+                blocco,
+                new GridConstraints(
+                        0, 0, 2, 1,
+                        GridConstraints.ANCHOR_WEST,
+                        GridConstraints.FILL_HORIZONTAL,
+                        GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW,
+                        GridConstraints.SIZEPOLICY_FIXED,
+                        null, null, null, 0, false
+                )
+        );
+    }
 
     private void caricaClassi() {
 
@@ -244,51 +298,79 @@ public class SchermataDocente {
     }
 
     private void aggiornaGrigliaClassi() {
+        aggiornaGrigliaClassi(true);
+    }
+
+    private void aggiornaGrigliaClassi(boolean riportaInAlto) {
         pnlClassi.removeAll();
+
+        int larghezzaViewport = scrollClassi.getViewport().getExtentSize().width;
+        if (larghezzaViewport <= 0) {
+            larghezzaViewport = 690;
+        }
 
         if (classi.isEmpty()) {
             pnlClassi.setLayout(new BorderLayout());
             pnlClassi.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
-            pnlClassi.setPreferredSize(new Dimension(690, 300));
+            pnlClassi.setPreferredSize(new Dimension(larghezzaViewport, 300));
             pnlClassi.add(creaStatoVuoto(), BorderLayout.CENTER);
         } else {
+            final int larghezzaMinimaCard = 300;
+            final int altezzaCard = 166;
+            final int spazio = 16;
+            final int margineLaterale = 8;
+
+            int larghezzaDisponibile = Math.max(1, larghezzaViewport - (margineLaterale * 2));
+            int colonne = Math.max(1, (larghezzaDisponibile + spazio) / (larghezzaMinimaCard + spazio));
+            colonne = Math.min(colonne, classi.size());
+
+            // Le card si dividono tutta la larghezza disponibile: in questo modo
+            // non rimane la fascia vuota a destra del riquadro delle classi.
+            int larghezzaCard =
+                    (larghezzaDisponibile - Math.max(0, colonne - 1) * spazio) / colonne;
+
             pnlClassi.setLayout(new GridBagLayout());
             pnlClassi.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 
             for (int i = 0; i < classi.size(); i++) {
                 GridBagConstraints gbc = new GridBagConstraints();
-                gbc.gridx = i % 2;
-                gbc.gridy = i / 2;
+                gbc.gridx = i % colonne;
+                gbc.gridy = i / colonne;
                 gbc.anchor = GridBagConstraints.NORTHWEST;
                 gbc.fill = GridBagConstraints.NONE;
                 gbc.weightx = 0.0;
                 gbc.weighty = 0.0;
-                gbc.insets = new Insets(0, 0, 16, gbc.gridx == 0 ? 16 : 0);
-                pnlClassi.add(creaCardClasse(classi.get(i), i), gbc);
+                gbc.insets = new Insets(0, 0, spazio, gbc.gridx == colonne - 1 ? 0 : spazio);
+                pnlClassi.add(creaCardClasse(classi.get(i), i, larghezzaCard), gbc);
             }
+
+            int righe = (classi.size() + colonne - 1) / colonne;
 
             GridBagConstraints filler = new GridBagConstraints();
             filler.gridx = 0;
-            filler.gridy = (classi.size() + 1) / 2;
-            filler.gridwidth = 2;
+            filler.gridy = righe;
+            filler.gridwidth = colonne;
             filler.weightx = 1.0;
             filler.weighty = 1.0;
             filler.fill = GridBagConstraints.BOTH;
+
             JPanel spacer = new JPanel();
             spacer.setOpaque(false);
             pnlClassi.add(spacer, filler);
 
-            int righe = (classi.size() + 1) / 2;
-            int altezza = (righe * 150) + Math.max(0, (righe - 1) * 16) + 16;
-            pnlClassi.setPreferredSize(new Dimension(690, altezza));
+            int altezza = (righe * altezzaCard) + Math.max(0, (righe - 1) * spazio) + 16;
+            pnlClassi.setPreferredSize(new Dimension(larghezzaViewport, altezza));
         }
 
+        Main.applicaRenderingTesto(pnlClassi);
         pnlClassi.revalidate();
         pnlClassi.repaint();
 
-        SwingUtilities.invokeLater(() ->
-                scrollClassi.getVerticalScrollBar().setValue(0)
-        );
+        if (riportaInAlto) {
+            SwingUtilities.invokeLater(() ->
+                    scrollClassi.getVerticalScrollBar().setValue(0)
+            );
+        }
     }
 
     private JComponent creaStatoVuoto() {
@@ -308,7 +390,7 @@ public class SchermataDocente {
         return panel;
     }
 
-    private JComponent creaCardClasse(InfoClasseDTO classe, int indice) {
+    private JComponent creaCardClasse(InfoClasseDTO classe, int indice, int larghezzaCard) {
         Color[] palette = paletteCard[indice % paletteCard.length];
         Color sfondo = palette[0];
         Color accento = palette[1];
@@ -316,9 +398,9 @@ public class SchermataDocente {
 
         JButton card = new JButton();
         card.setLayout(new BorderLayout(0, 10));
-        card.setPreferredSize(new Dimension(320, 150));
-        card.setMinimumSize(new Dimension(320, 150));
-        card.setMaximumSize(new Dimension(320, 150));
+        card.setPreferredSize(new Dimension(larghezzaCard, 166));
+        card.setMinimumSize(new Dimension(larghezzaCard, 166));
+        card.setMaximumSize(new Dimension(larghezzaCard, 166));
         card.setForeground(bluScuro);
         card.setOpaque(false);
         card.setContentAreaFilled(false);
@@ -353,9 +435,20 @@ public class SchermataDocente {
         PillLabel lblCodice = new PillLabel(classe.getCodice(), sfondoPill, accento);
         lblCodice.setAlignmentX(Component.LEFT_ALIGNMENT);
 
+        JPanel rigaCodice = new JPanel();
+        rigaCodice.setOpaque(false);
+        rigaCodice.setLayout(new BoxLayout(rigaCodice, BoxLayout.X_AXIS));
+        rigaCodice.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JButton btnCopiaCodice = Main.creaPulsanteCopiaCodice(classe.getCodice());
+        rigaCodice.add(lblCodice);
+        rigaCodice.add(Box.createRigidArea(new Dimension(8, 0)));
+        rigaCodice.add(btnCopiaCodice);
+        rigaCodice.add(Box.createHorizontalGlue());
+
         info.add(lblCodiceTitle);
         info.add(Box.createRigidArea(new Dimension(0, 7)));
-        info.add(lblCodice);
+        info.add(rigaCodice);
 
         card.add(top, BorderLayout.NORTH);
         card.add(info, BorderLayout.CENTER);
@@ -374,10 +467,11 @@ public class SchermataDocente {
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(contentPane);
 
         SchermataClasse schermataClasse = new SchermataClasse(classe);
-        frame.setContentPane(schermataClasse.getContentPane());
-
-        frame.revalidate();
-        frame.repaint();
+        Main.apriSchermata(
+                frame,
+                getContentPane(),
+                schermataClasse.getContentPane()
+        );
     }
 
     private Color schiarisci(Color color) {
@@ -423,6 +517,7 @@ public class SchermataDocente {
     }*/
 
     public JPanel getContentPane() {
+        Main.applicaRenderingTesto(contentPane);
         return contentPane;
     }
 

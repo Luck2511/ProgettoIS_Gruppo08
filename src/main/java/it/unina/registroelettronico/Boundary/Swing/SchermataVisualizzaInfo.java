@@ -37,6 +37,7 @@ public class SchermataVisualizzaInfo {
     public SchermataVisualizzaInfo(InfoClasseDTO classe) {
 
         this.classe = classe;
+        configuraNavigazioneIndietro();
 
         btnVisualizzaValutazioniStudenti.setIcon(
                 new FlatSVGIcon("icons/visualizza_valutazioni_studenti.svg", 118, 118)
@@ -67,15 +68,28 @@ public class SchermataVisualizzaInfo {
         });
     }
 
+    private void configuraNavigazioneIndietro() {
+        contentPane.remove(lblHeader);
+        JPanel header = Main.creaIntestazioneConIndietro(lblHeader);
+        contentPane.add(
+                header,
+                new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+                        GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED,
+                        null, null, null, 0, false)
+        );
+    }
+
     private void apriSchermataValutazioniStudenti(InfoClasseDTO classe) {
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(contentPane);
 
         SchermataValutazioniStudenti schermataValutazioniStudenti =
                 new SchermataValutazioniStudenti(classe);
 
-        frame.setContentPane(schermataValutazioniStudenti.getContentPane());
-        frame.revalidate();
-        frame.repaint();
+        Main.apriSchermata(
+                frame,
+                getContentPane(),
+                schermataValutazioniStudenti.getContentPane()
+        );
     }
 
     private void preparaCard(JButton card) {
@@ -100,6 +114,7 @@ public class SchermataVisualizzaInfo {
     }
 
     public JPanel getContentPane() {
+        Main.applicaRenderingTesto(contentPane);
         return contentPane;
     }
 

@@ -36,6 +36,7 @@ public class SchermataRegistro {
     public SchermataRegistro(InfoClasseDTO classe) {
 
         this.classe = classe;
+        configuraNavigazioneIndietro();
 
         btnRicercaRapida.setIcon(
                 spostaIconaDestra(
@@ -77,15 +78,28 @@ public class SchermataRegistro {
         });
     }
 
+    private void configuraNavigazioneIndietro() {
+        contentPane.remove(lblHeader);
+        JPanel header = Main.creaIntestazioneConIndietro(lblHeader);
+        contentPane.add(
+                header,
+                new GridConstraints(0, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+                        GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW,
+                        GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false)
+        );
+    }
+
     private void apriSchermataVisualizzaInfo(InfoClasseDTO classe) {
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(contentPane);
 
         SchermataVisualizzaInfo schermataVisualizzaInfo =
                 new SchermataVisualizzaInfo(classe);
 
-        frame.setContentPane(schermataVisualizzaInfo.getContentPane());
-        frame.revalidate();
-        frame.repaint();
+        Main.apriSchermata(
+                frame,
+                getContentPane(),
+                schermataVisualizzaInfo.getContentPane()
+        );
     }
 
     private void apriSchermataSelezioneRegistraVoce(InfoClasseDTO classe) {
@@ -94,9 +108,11 @@ public class SchermataRegistro {
         SchermataSelezioneRegistraVoce schermataSelezioneRegistraVoce =
                 new SchermataSelezioneRegistraVoce(classe);
 
-        frame.setContentPane(schermataSelezioneRegistraVoce.getContentPane());
-        frame.revalidate();
-        frame.repaint();
+        Main.apriSchermata(
+                frame,
+                getContentPane(),
+                schermataSelezioneRegistraVoce.getContentPane()
+        );
     }
 
     private Icon spostaIconaDestra(Icon icona, int offsetX) {
@@ -140,6 +156,7 @@ public class SchermataRegistro {
     }
 
     public JPanel getContentPane() {
+        Main.applicaRenderingTesto(contentPane);
         return contentPane;
     }
 
