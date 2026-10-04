@@ -82,13 +82,14 @@ public class Registro {
 
     }
 
-    public Valutazione aggiungiValutazione(
+    private Valutazione aggiungiValutazione(
             LocalDate data,
             TipologiaValutazione tipologia,
             float voto,
             String nota,
             Studente studente
     ) {
+
 
         Valutazione valutazione =
                 new Valutazione(
@@ -104,7 +105,7 @@ public class Registro {
         return valutazione;
     }
 
-    public void rimuoviValutazione(
+    private void rimuoviValutazione(
             Valutazione valutazione
     ) {
         valutazioniRegistrate.remove(valutazione);
@@ -145,6 +146,7 @@ public class Registro {
             return false;
         }
 
+        /*
         // creazione della valutazione
         Valutazione valutazione =
                 new Valutazione(
@@ -160,6 +162,11 @@ public class Registro {
 
         // modifica dello stato dell'Entity
         valutazioniRegistrate.add(valutazione);
+        */
+
+
+        Valutazione valutazione=aggiungiValutazione(data,tipoValutazione,voto,nota,studente);
+
 
         // persistenza
         try {
@@ -182,7 +189,10 @@ public class Registro {
         } catch (RuntimeException e) {
 
             // rollback dello stato in memoria
+            /*
             valutazioniRegistrate.remove(valutazione);
+            */
+            rimuoviValutazione(valutazione);
 
             return false;
         }
@@ -198,5 +208,7 @@ public class Registro {
         gestoreNotifiche.inviaNotifica(descrizione);
 
     }
+
+
 
 }
