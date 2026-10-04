@@ -23,6 +23,9 @@ public class Utente {
     )
     private String indirizzoEmailIstituzionale;
 
+    @Column(nullable = false)
+    private String password;
+
     public Utente(String indirizzoEmailIstituzionale, String cognome, String nome) {
         this.indirizzoEmailIstituzionale = indirizzoEmailIstituzionale;
         this.cognome = cognome;
