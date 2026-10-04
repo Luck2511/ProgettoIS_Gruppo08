@@ -4,8 +4,8 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import it.unina.registroelettronico.Controller.ControllerClassi;
-import it.unina.registroelettronico.Controller.Exceptions.ClasseInesistenteException;
-import it.unina.registroelettronico.Controller.Exceptions.GiaIscrittoException;
+import it.unina.registroelettronico.Exceptions.ClasseInesistenteException;
+import it.unina.registroelettronico.Exceptions.GiaIscrittoException;
 import it.unina.registroelettronico.DTO.InfoClasseDTO;
 import it.unina.registroelettronico.DTO.StudenteDTO;
 

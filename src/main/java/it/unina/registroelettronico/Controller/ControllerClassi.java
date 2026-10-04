@@ -1,16 +1,15 @@
 package it.unina.registroelettronico.Controller;
 
 
-import it.unina.registroelettronico.Controller.Exceptions.ClasseEsistenteException;
-import it.unina.registroelettronico.Controller.Exceptions.ClasseInesistenteException;
-import it.unina.registroelettronico.Controller.Exceptions.GiaIscrittoException;
+import it.unina.registroelettronico.Exceptions.ClasseEsistenteException;
+import it.unina.registroelettronico.Exceptions.ClasseInesistenteException;
+import it.unina.registroelettronico.Exceptions.GiaIscrittoException;
 import it.unina.registroelettronico.DTO.DocenteDTO;
 import it.unina.registroelettronico.DTO.InfoClasseDTO;
 import it.unina.registroelettronico.DTO.StudenteDTO;
 import it.unina.registroelettronico.Entity.SistemaRegistroElettronico;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class ControllerClassi {

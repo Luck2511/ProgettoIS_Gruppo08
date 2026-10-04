@@ -4,7 +4,7 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import it.unina.registroelettronico.Controller.ControllerClassi;
-import it.unina.registroelettronico.Controller.Exceptions.ClasseEsistenteException;
+import it.unina.registroelettronico.Exceptions.ClasseEsistenteException;
 import it.unina.registroelettronico.DTO.DocenteDTO;
 import it.unina.registroelettronico.DTO.InfoClasseDTO;
 
@@ -23,7 +23,6 @@ import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 
 public class SchermataDocente {
 

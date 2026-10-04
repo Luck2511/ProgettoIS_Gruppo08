@@ -1,4 +1,4 @@
-package it.unina.registroelettronico.Controller.Exceptions;
+package it.unina.registroelettronico.Exceptions;
 
 public class ClasseInesistenteException extends Exception{
 
