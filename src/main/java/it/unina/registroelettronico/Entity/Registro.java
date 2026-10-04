@@ -1,5 +1,6 @@
 package it.unina.registroelettronico.Entity;
 
+import it.unina.registroelettronico.Comunicazione.GestoreNotifiche;
 import it.unina.registroelettronico.Database.GestorePersistenza;
 import jakarta.persistence.*;
 
@@ -45,6 +46,9 @@ public class Registro {
 
     @Transient //serve per non renderlo persistente e farlo ignorare da Hibernate
     private GestorePersistenza gestorePersistenza=new GestorePersistenza();
+
+    @Transient
+    private GestoreNotifiche gestoreNotifiche=new GestoreNotifiche();
 
     public Registro(ClasseVirtuale classeVirtuale){
         this.classeVirtuale=classeVirtuale;
@@ -183,7 +187,15 @@ public class Registro {
             return false;
         }
 
+        inviaNotifica("Hai una nuova valutazione da visualizzare nel registro della classe "+classeVirtuale.getNome()+"!");
+
         return true;
+
+    }
+
+    private void inviaNotifica(String descrizione){
+
+        gestoreNotifiche.inviaNotifica(descrizione);
 
     }
 
