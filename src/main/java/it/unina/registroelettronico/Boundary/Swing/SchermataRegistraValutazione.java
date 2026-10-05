@@ -207,6 +207,13 @@ public class SchermataRegistraValutazione {
             );
             return;
         }
+        else if(data.getDayOfWeek().equals(DayOfWeek.SUNDAY)){
+            JOptionPane.showMessageDialog(
+                    contentPane,
+                    "Non puoi registare una valutazione di Domenica."
+            );
+            return;
+        }
 
         if(nota.length()>200){
             JOptionPane.showMessageDialog(
