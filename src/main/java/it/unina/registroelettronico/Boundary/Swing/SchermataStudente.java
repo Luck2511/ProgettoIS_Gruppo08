@@ -265,6 +265,16 @@ public class SchermataStudente {
             return;
         }
 
+        if (codiceClasse.length() != 10) {
+            lblErrore.setText("Il codice deve essere lungo 10 caratteri.");
+            return;
+        }
+
+        if (!codiceClasse.substring(0,4).equals("CLS-")) {
+            lblErrore.setText("Il codice deve iniziare con 'CLS-'.");
+            return;
+        }
+
         ControllerClassi controllerClassi=ControllerClassi.getInstance();
 
         InfoClasseDTO classe=new InfoClasseDTO("","");//variabile d'uscita
