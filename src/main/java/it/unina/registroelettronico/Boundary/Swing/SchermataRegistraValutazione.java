@@ -208,6 +208,14 @@ public class SchermataRegistraValutazione {
             return;
         }
 
+        if(nota.length()>200){
+            JOptionPane.showMessageDialog(
+                    contentPane,
+                    "Superato limite caratteri nota [200 caratteri]."
+            );
+            return;
+        }
+
         float votoNumerico=convertiVoto(voto);
 
         StudenteDTO studente =
