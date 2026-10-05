@@ -21,7 +21,7 @@ public class Valutazione {
     @Column(nullable = false)
     private float voto;
 
-    @Column(length = 1000)
+    @Column(length = 200)
     private String notaDescrittiva;
 
 
