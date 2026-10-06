@@ -210,9 +210,9 @@ public class SistemaRegistroElettronico {
 
     }
 
-    public boolean registraDocente(String indirizzoEmailIstituzionale, String nome, String cognome) {
+    public boolean registraDocente(String indirizzoEmailIstituzionale, String nome, String cognome, String password) {
 
-        Docente docente=new Docente(indirizzoEmailIstituzionale,cognome,nome);
+        Docente docente=new Docente(indirizzoEmailIstituzionale,cognome,nome,password);
 
         utenti.add(docente);
 
@@ -220,8 +220,8 @@ public class SistemaRegistroElettronico {
 
     }
 
-    public boolean registraStudente(String indirizzoEmailIstituzionale, String nome, String cognome) {
-        Studente studente=new Studente(indirizzoEmailIstituzionale,cognome,nome);
+    public boolean registraStudente(String indirizzoEmailIstituzionale, String nome, String cognome, String password) {
+        Studente studente=new Studente(indirizzoEmailIstituzionale,cognome,nome,password);
 
         utenti.add(studente);
 

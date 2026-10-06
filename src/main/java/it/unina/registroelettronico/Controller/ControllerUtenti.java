@@ -24,12 +24,12 @@ public class ControllerUtenti {
 
     public boolean registraDocente(DocenteDTO docente) {
 
-        return sre.registraDocente(docente.getIndirizzoEmailIstituzionale(),docente.getNome(),docente.getCognome());
+        return sre.registraDocente(docente.getIndirizzoEmailIstituzionale(),docente.getNome(),docente.getCognome(),docente.getPassword());
 
 
     }
 
     public boolean registraStudente(StudenteDTO studente) {
-        return sre.registraStudente(studente.getIndirizzoEmailIstituzionale(),studente.getNome(),studente.getCognome());
+        return sre.registraStudente(studente.getIndirizzoEmailIstituzionale(),studente.getNome(),studente.getCognome(),studente.getPassword());
     }
 }

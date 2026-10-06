@@ -13,8 +13,8 @@ public class Studente extends Utente{
             fetch = FetchType.EAGER)
     private List<ClasseVirtuale> classiVirtuali=new ArrayList<>();
 
-    public Studente(String indirizzoEmailIstituzionale, String cognome, String nome) {
-        super(indirizzoEmailIstituzionale, cognome, nome);
+    public Studente(String indirizzoEmailIstituzionale, String cognome, String nome, String password) {
+        super(indirizzoEmailIstituzionale, cognome, nome,password);
 
 
     }

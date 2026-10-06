@@ -26,10 +26,11 @@ public class Utente {
     @Column(nullable = false)
     private String password;
 
-    public Utente(String indirizzoEmailIstituzionale, String cognome, String nome) {
+    public Utente(String indirizzoEmailIstituzionale, String cognome, String nome, String password) {
         this.indirizzoEmailIstituzionale = indirizzoEmailIstituzionale;
         this.cognome = cognome;
         this.nome = nome;
+        this.password=password;
     }
 
 

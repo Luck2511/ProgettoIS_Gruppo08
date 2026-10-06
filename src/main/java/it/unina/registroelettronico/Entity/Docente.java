@@ -14,8 +14,8 @@ public class Docente extends Utente{
     private List<ClasseVirtuale> classiGestite=new ArrayList<>();;
 
 
-    public Docente(String indirizzoEmailIstituzionale, String cognome, String nome) {
-        super(indirizzoEmailIstituzionale,cognome,nome);
+    public Docente(String indirizzoEmailIstituzionale, String cognome, String nome,String password) {
+        super(indirizzoEmailIstituzionale,cognome,nome,password);
 
     }
 

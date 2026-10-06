@@ -5,13 +5,13 @@ public class DocenteDTO {
     private String nome;
     private String cognome;
     private String indirizzoEmailIstituzionale;
+    private String password;
 
-
-    public DocenteDTO(String nome,String cognome,String indirizzoEmailIstituzionale){
+    public DocenteDTO(String nome,String cognome,String indirizzoEmailIstituzionale, String password){
         this.nome=nome;
         this.cognome=cognome;
         this.indirizzoEmailIstituzionale=indirizzoEmailIstituzionale;
-
+        this.password=password;
     }
 
     public String getIndirizzoEmailIstituzionale() {
@@ -26,4 +26,6 @@ public class DocenteDTO {
     public String getCognome() {
         return cognome;
     }
+
+    public String getPassword() {return password;}
 }

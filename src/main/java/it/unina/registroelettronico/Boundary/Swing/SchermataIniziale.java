@@ -70,7 +70,7 @@ public class SchermataIniziale {
         *
         */
 
-        DocenteDTO docente=new DocenteDTO("Anna Rita","Fasolino","annarita.fasolino@unina.it");
+        DocenteDTO docente=new DocenteDTO("Anna Rita","Fasolino","annarita.fasolino@unina.it","1234");
 
         //Vogliamo rendere persistente questo docente nel database
         ControllerUtenti controllerUtenti=ControllerUtenti.getInstance();
@@ -108,7 +108,7 @@ public class SchermataIniziale {
          *
          */
 
-        StudenteDTO studente=new StudenteDTO("Matteo","Cefalo","matteo.cefalo@studenti.unina.it");
+        StudenteDTO studente=new StudenteDTO("Matteo","Cefalo","matteo.cefalo@studenti.unina.it","1234");
 
         //Vogliamo rendere persistente questo studente nel database
         ControllerUtenti controllerUtenti=ControllerUtenti.getInstance();
