@@ -14,6 +14,13 @@ public class DocenteDTO {
         this.password=password;
     }
 
+    public DocenteDTO(String nome,String cognome,String indirizzoEmailIstituzionale){
+        this.nome=nome;
+        this.cognome=cognome;
+        this.indirizzoEmailIstituzionale=indirizzoEmailIstituzionale;
+        this.password="";
+    }
+
     public String getIndirizzoEmailIstituzionale() {
         return indirizzoEmailIstituzionale;
     }
