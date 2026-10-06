@@ -299,7 +299,11 @@ public class SchermataStudente {
 
         //se l'esito è true
         caricaClassi();
-        dialog.dispose();
+
+        if (dialog != null) {
+            dialog.dispose();
+        }
+
     }
 
     private void aggiornaGrigliaClassi() {

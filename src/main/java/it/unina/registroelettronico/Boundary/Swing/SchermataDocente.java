@@ -298,7 +298,10 @@ public class SchermataDocente {
         }
 
         caricaClassi();
-        dialog.dispose();
+
+        if (dialog != null) {
+            dialog.dispose();
+        }
     }
 
     private void aggiornaGrigliaClassi() {

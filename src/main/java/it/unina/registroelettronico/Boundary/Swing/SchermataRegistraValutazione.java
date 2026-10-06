@@ -52,6 +52,14 @@ public class SchermataRegistraValutazione {
 
     private LocalDate dataSelezionata;
 
+    /*
+     * Normalmente i messaggi grafici sono abilitati.
+     * I test possono disabilitarli per evitare l'apertura
+     * dei JOptionPane durante l'esecuzione JUnit.
+     */
+    private boolean mostraMessaggi = true;
+
+
     private final DateTimeFormatter formatoData =
             DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -170,54 +178,47 @@ public class SchermataRegistraValutazione {
         String nota = getNota();
 
         if (cmbTipologia.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(
-                    contentPane,
+            mostraMessaggio(
                     "Seleziona una tipologia."
             );
             return;
         }
 
         if (cmbVoto.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(
-                    contentPane,
+            mostraMessaggio(
                     "Seleziona un voto."
             );
             return;
         }
 
         if (indiceStudente == 0) {
-            JOptionPane.showMessageDialog(
-                    contentPane,
+            mostraMessaggio(
                     "Seleziona uno studente."
             );
             return;
         }
 
         if (data == null) {
-            JOptionPane.showMessageDialog(
-                    contentPane,
+            mostraMessaggio(
                     "Seleziona una data."
             );
             return;
         }
         else if(data.isAfter(LocalDate.now())){
-            JOptionPane.showMessageDialog(
-                    contentPane,
+            mostraMessaggio(
                     "Impossibile selezionare data futura."
             );
             return;
         }
         else if(data.getDayOfWeek().equals(DayOfWeek.SUNDAY)){
-            JOptionPane.showMessageDialog(
-                    contentPane,
+            mostraMessaggio(
                     "Non puoi registare una valutazione di Domenica."
             );
             return;
         }
 
         if(nota.length()>200){
-            JOptionPane.showMessageDialog(
-                    contentPane,
+            mostraMessaggio(
                     "Superato limite caratteri nota [200 caratteri]."
             );
             return;
@@ -244,8 +245,7 @@ public class SchermataRegistraValutazione {
         );
 
         if(esitoCasoDUso){
-            JOptionPane.showMessageDialog(
-                    contentPane,
+            mostraMessaggio(
                     "Registrazione valutazione completata con successo."
             );
 
@@ -253,8 +253,7 @@ public class SchermataRegistraValutazione {
 
         }
         else{
-            JOptionPane.showMessageDialog(
-                    contentPane,
+            mostraMessaggio(
                     "Errore nella registrazione della valutazione."
             );
 
@@ -648,6 +647,192 @@ public class SchermataRegistraValutazione {
         Main.applicaRenderingTesto(contentPane);
         return contentPane;
     }
+
+
+    /*
+     * Centralizza la visualizzazione dei messaggi della Boundary.
+     * Nell'applicazione mostraMessaggi vale true, quindi il comportamento
+     * grafico rimane identico a quello attuale.
+     * Nei test mostraMessaggi viene impostato a false e il JOptionPane
+     * non viene aperto.
+     */
+    private void mostraMessaggio(String messaggio) {
+
+        if (mostraMessaggi) {
+            JOptionPane.showMessageDialog(
+                    contentPane,
+                    messaggio
+            );
+        }
+    }
+
+    /*
+     * Usato dai test per disabilitare esclusivamente
+     * l'apertura dei JOptionPane.
+     */
+    void setMostraMessaggi(boolean mostraMessaggi) {
+        this.mostraMessaggi = mostraMessaggi;
+    }
+
+
+    /*
+     * Predispone la tipologia nel JComboBox realmente letto
+     * da registraValutazione().
+     *
+     * Se viene passato null viene selezionata la voce iniziale,
+     * cioè "Seleziona tipologia".
+     */
+    void setTipologiaPerTest(String tipologia) {
+
+        if (tipologia == null) {
+            cmbTipologia.setSelectedIndex(0);
+            return;
+        }
+
+        /*
+         * Nel dominio abbiamo ad esempio PROVA_SCRITTA,
+         * mentre nella combo viene mostrato "PROVA SCRITTA".
+         */
+        cmbTipologia.setSelectedItem(
+                tipologia.replace("_", " ")
+        );
+    }
+
+
+    /*
+     * Predispone il voto nel JComboBox realmente letto
+     * da registraValutazione().
+     *
+     * La test suite esprime i voti numericamente, per esempio 7.25.
+     * La GUI invece li rappresenta come 7+, 6½, 6-, ecc.
+     * Il setter effettua esclusivamente questa traduzione per
+     * poter predisporre il componente.
+     *
+     * La successiva conversione verso float continua ad essere
+     * eseguita dal vero metodo convertiVoto() della Boundary.
+     */
+    void setVotoPerTest(Float voto) {
+
+        if (voto == null) {
+            cmbVoto.setSelectedIndex(0);
+            return;
+        }
+
+        int quarti = Math.round(voto * 4);
+
+        int intero = quarti / 4;
+        int resto = quarti % 4;
+
+        String votoVisualizzato;
+
+        if (resto == 0) {
+
+            votoVisualizzato =
+                    String.valueOf(intero);
+
+        } else if (resto == 1) {
+
+            votoVisualizzato =
+                    intero + "+";
+
+        } else if (resto == 2) {
+
+            votoVisualizzato =
+                    intero + "½";
+
+        } else {
+
+            votoVisualizzato =
+                    (intero + 1) + "-";
+        }
+
+        cmbVoto.setSelectedItem(votoVisualizzato);
+    }
+
+
+    /*
+     * Predispone lo studente nel JComboBox realmente utilizzato
+     * dal metodo registraValutazione().
+     *
+     * L'email viene cercata nella lista studenti caricata
+     * normalmente dalla Boundary.
+     *
+     * Passando null viene selezionata la voce
+     * "Seleziona studente".
+     */
+    void setStudentePerTest(String emailStudente) {
+
+        if (emailStudente == null) {
+            cmbStudente.setSelectedIndex(0);
+            return;
+        }
+
+        for (int i = 0; i < studenti.size(); i++) {
+
+            StudenteDTO studente =
+                    studenti.get(i);
+
+            if (studente
+                    .getIndirizzoEmailIstituzionale()
+                    .equals(emailStudente)) {
+
+                /*
+                 * +1 perché l'indice 0 della combo è occupato
+                 * dalla voce "Seleziona studente".
+                 */
+                cmbStudente.setSelectedIndex(i + 1);
+                return;
+            }
+        }
+
+        /*
+         * Se succede significa che è sbagliata la precondizione
+         * preparata dal test, non il caso d'uso.
+         */
+        throw new IllegalArgumentException(
+                "Studente non presente nella classe."
+        );
+    }
+
+
+    /*
+     * Predispone la data realmente letta da registraValutazione().
+     * Aggiorniamo anche txtData per mantenere coerente lo stato
+     * interno della Boundary, anche se il test non verifica la GUI.
+     */
+    void setDataPerTest(LocalDate data) {
+
+        this.dataSelezionata = data;
+
+        txtData.setText(
+                data == null
+                        ? ""
+                        : data.format(formatoData)
+        );
+    }
+
+
+    /*
+     * Predispone la nota nel JTextArea realmente letto
+     * da registraValutazione().
+     */
+    void setNotaPerTest(String nota) {
+
+        txtNota.setText(
+                nota == null ? "" : nota
+        );
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     {
 // GUI initializer generated by IntelliJ IDEA GUI Designer
