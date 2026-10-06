@@ -161,7 +161,7 @@ public class SchermataRegistraValutazione {
         setStudenti(studentiVisualizzati);
     }
 
-    private void registraValutazione() {
+    void registraValutazione() {
 
         String tipologia = getTipologiaSelezionata();
         String voto = getVotoSelezionato();

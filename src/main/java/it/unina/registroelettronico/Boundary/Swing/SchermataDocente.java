@@ -264,7 +264,7 @@ public class SchermataDocente {
         dialog.dispose();
     }
 
-    private void confermaCreazioneClasse(JDialog dialog, JTextField txtNomeClasse, JLabel lblErrore) {
+    void confermaCreazioneClasse(JDialog dialog, JTextField txtNomeClasse, JLabel lblErrore) {
         String nomeClasse = txtNomeClasse.getText() == null
                 ? ""
                 : txtNomeClasse.getText().trim();

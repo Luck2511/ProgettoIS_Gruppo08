@@ -255,7 +255,7 @@ public class SchermataStudente {
         dialog.dispose();
     }
 
-    private void confermaIscrizioneClasse(JDialog dialog, JTextField txtCodiceClasse, JLabel lblErrore) {
+    void confermaIscrizioneClasse(JDialog dialog, JTextField txtCodiceClasse, JLabel lblErrore) {
         String codiceClasse = txtCodiceClasse.getText() == null
                 ? ""
                 : txtCodiceClasse.getText().trim().toUpperCase();
