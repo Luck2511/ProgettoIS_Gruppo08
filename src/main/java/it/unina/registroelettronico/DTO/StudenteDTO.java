@@ -7,7 +7,7 @@ public class StudenteDTO {
     private String indirizzoEmailIstituzionale;
     private String password;
 
-    public StudenteDTO(String nome,String cognome,String indirizzoEmailIstituzionale){
+    public StudenteDTO(String nome,String cognome,String indirizzoEmailIstituzionale,String password){
         this.nome=nome;
         this.cognome=cognome;
         this.indirizzoEmailIstituzionale=indirizzoEmailIstituzionale;
