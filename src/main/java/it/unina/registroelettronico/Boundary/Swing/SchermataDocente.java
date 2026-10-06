@@ -274,6 +274,11 @@ public class SchermataDocente {
             return;
         }
 
+        if (nomeClasse.length() > 50) {
+            lblErrore.setText("Superato limite caratteri nome [50 caratteri].");
+            return;
+        }
+
         // QUI VA RECUPERATO ControllerClassi TRAMITE getInstance() E CHIAMATO IL METODO PER CREARE LA CLASSE VIRTUALE.
         ControllerClassi controllerClassi=ControllerClassi.getInstance();
 
