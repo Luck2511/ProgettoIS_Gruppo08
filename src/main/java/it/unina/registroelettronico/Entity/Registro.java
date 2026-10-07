@@ -77,9 +77,7 @@ public class Registro {
             }
 
         }
-
         return valStudente;
-
     }
 
     private Valutazione aggiungiValutazione(
