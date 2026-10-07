@@ -1,14 +1,16 @@
 package it.unina.registroelettronico.Comunicazione;
 
+import java.util.List;
+
 public class GestoreNotifiche {
 
     public GestoreNotifiche(){
 
     }
 
-    public void inviaNotifica(String descrizione){
+    public void inviaNotifica(List<String> notifica){
 
-        //implementazione di GestoreNotifiche non di nostra competenza
+        //implementazione di GestoreNotifiche che dipenderà dal sistema di notifiche esterno
 
     }
 

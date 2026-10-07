@@ -5,6 +5,8 @@ import it.unina.registroelettronico.Database.GestorePersistenza;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -195,17 +197,30 @@ public class Registro {
             return false;
         }
 
-        inviaNotifica("Hai una nuova valutazione da visualizzare nel registro della classe "+classeVirtuale.getNome()+"!");
+        inviaNotifica("Hai una nuova valutazione da visualizzare nel registro della classe "+classeVirtuale.getNome()+"!",emailStudente);
 
         return true;
 
     }
 
-    private void inviaNotifica(String descrizione){
+    private void inviaNotifica(String descrizione,String emailStudente){
 
-        gestoreNotifiche.inviaNotifica(descrizione);
+        DateTimeFormatter formato =
+                DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+        String dataEOra= LocalDateTime.now().format(formato);
+
+        List<String> notifica=new ArrayList<>();
+        notifica.add(descrizione);
+        notifica.add(emailStudente);
+        notifica.add(dataEOra);
+
+        gestoreNotifiche.inviaNotifica(notifica);
 
     }
+
+
+
 
 
 
