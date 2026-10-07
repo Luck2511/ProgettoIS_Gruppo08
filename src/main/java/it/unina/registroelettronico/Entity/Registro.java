@@ -219,7 +219,19 @@ public class Registro {
 
     }
 
-
+    /**
+     * Usato esclusivamente dai test strutturali per predisporre
+     * lo stato iniziale delle valutazioni del Registro.
+     *
+     * Non è public: è accessibile soltanto dalle classi appartenenti
+     * allo stesso package, compresa la classe di test.
+     */
+    void setValutazioniRegistratePerTest(
+            List<Valutazione> valutazioni
+    ) {
+        this.valutazioniRegistrate.clear();
+        this.valutazioniRegistrate.addAll(valutazioni);
+    }
 
 
 

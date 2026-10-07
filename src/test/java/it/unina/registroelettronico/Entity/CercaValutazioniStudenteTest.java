@@ -1,9 +1,5 @@
 package it.unina.registroelettronico.Entity;
 
-import it.unina.registroelettronico.Database.GestorePersistenza;
-import it.unina.registroelettronico.Database.JpaUtil;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,199 +7,107 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * Test strutturali del metodo Registro.cercaValutazioniStudente(String).
- *
- * Il metodo ha complessità ciclomatica V(G) = 3; vengono quindi
- * considerati i tre cammini linearmente indipendenti individuati nel CFG.
- *
- * Le valutazioni necessarie come precondizione vengono create tramite
- * il vero metodo Registro.registraValutazione(...), come avviene nel progetto.
- */
-@DisplayName("Test strutturale - Registro.cercaValutazioniStudente")
+@DisplayName("Suite di Test Strutturale - Cerca Valutazioni Studente")
 class CercaValutazioniStudenteTest {
 
-    private EntityManager em;
     private Registro registro;
     private Studente studenteA;
     private Studente studenteB;
 
-    /*
-     * Prima di ogni test:
-     * 1) apriamo un EntityManager collegato al database reale;
-     * 2) puliamo le tabelle coinvolte;
-     * 3) creiamo Docente, Studente A, Studente B e una ClasseVirtuale;
-     * 4) iscriviamo entrambi gli studenti alla classe;
-     * 5) rendiamo persistente la precondizione comune e recuperiamo il Registro della classe.
-     *
-     * In questo modo ogni test parte da un Registro reale ma senza valutazioni.
-     */
     @BeforeEach
-    void setUp() {
-        em = JpaUtil.getInstance().getEntityManager();
-        svuotaTabelle();
+    void setUp() {//questo metodo eseguito prima di ogni test case contiene le precondizioni comuni
 
-        Docente docente = new Docente(
-                "docente.strutturale@test.unina.it",
+        registro = new Registro();
+
+        studenteA = new Studente(
+                "studente.a@test.unina.it",
                 "Rossi",
                 "Mario",
                 "password-test"
         );
 
-        studenteA = new Studente(
-                "studente.a@test.unina.it",
-                "Bianchi",
-                "Anna",
-                "password-test"
-        );
-
         studenteB = new Studente(
                 "studente.b@test.unina.it",
-                "Verdi",
-                "Luca",
+                "Bianchi",
+                "Luigi",
                 "password-test"
         );
+    }
 
-        ClasseVirtuale classe = new ClasseVirtuale(
-                "Classe test strutturale",
-                "CLS-STR001",
-                docente
-        );
+    private Valutazione creaValutazione(Studente studente) {
 
-        // La relazione viene predisposta sui due lati, come nel dominio reale.
-        classe.aggiungiStudente(studenteA);
-        studenteA.collegaClasse(classe);
-
-        classe.aggiungiStudente(studenteB);
-        studenteB.collegaClasse(classe);
-
-        GestorePersistenza gestorePersistenza = new GestorePersistenza();
-
-        //assertTrue perché se qualcosa va male nella costruzione della precondizione è inutile continuare
-        assertTrue(
-                gestorePersistenza.salvaTutti(
-                        docente,
-                        studenteA,
-                        studenteB,
-                        classe
-                ),
-                "La precondizione del test deve essere persistita correttamente"
-        );
-
-        registro = classe.getRegistro();
-
-        //assertNotNull perché senza registro non possiamo testare il metodo e quindi è inutile continuare
-        assertNotNull(
-                registro,
-                "La ClasseVirtuale deve possedere il proprio Registro"
+        return new Valutazione(
+                LocalDate.of(2026, 10, 3),
+                TipologiaValutazione.INTERROGAZIONE,
+                7.25f,
+                "Buona prova",
+                studente
         );
     }
 
-    /*
-     * Svuota il database prima di ogni test.
-     *
-     * Le tabelle vengono eliminate in un ordine che rispetta le relazioni
-     * e le foreign key presenti nel modello JPA.
-     */
-    private void svuotaTabelle() {
-        EntityTransaction tx = em.getTransaction();
 
-        try {
-            if (!tx.isActive()) {
-                tx.begin();
-            }
+    // TC1 - Il registro non contiene valutazioni
+    // Cammino: START - 1 - 2(F) - 10 - END
 
-            em.createNativeQuery("DELETE FROM classe_studente").executeUpdate();
-            em.createQuery("DELETE FROM Valutazione").executeUpdate();
-            em.createQuery("DELETE FROM Lezione").executeUpdate();
-            em.createQuery("DELETE FROM Compito").executeUpdate();
-            em.createQuery("DELETE FROM ClasseVirtuale").executeUpdate();
-            em.createQuery("DELETE FROM Registro").executeUpdate();
-            em.createQuery("DELETE FROM Docente").executeUpdate();
-            em.createQuery("DELETE FROM Studente").executeUpdate();
-            em.createQuery("DELETE FROM Utente").executeUpdate();
-
-            tx.commit();
-            em.clear();
-
-        } catch (Exception e) {
-            if (tx.isActive()) {
-                tx.rollback();
-            }
-
-            throw new RuntimeException(
-                    "Errore durante la pulizia del DB di test: " + e.getMessage(),
-                    e
-            );
-        }
-    }
-
-
-    // CAMMINO 1
-    // START-1-2(F)-10-END
-
-    /*
-     * Il Registro non contiene valutazioni.
-     * Il ciclo for non entra mai nel corpo e il metodo restituisce
-     * direttamente una lista vuota.
-     */
     @Test
     @DisplayName("TC1: Registro senza valutazioni")
     void cercaValutazioniStudente_ListaVuota_RestituisceListaVuota() {
 
-        // Act: nessuna valutazione è stata registrata nell'Arrange.
+        // Arrange
+        //Precondizione: non ci sono valutazioni registrate
+        registro.setValutazioniRegistratePerTest(List.of());
+
+        // Act
         List<List<String>> risultato =
                 registro.cercaValutazioniStudente(
                         studenteA.getIndirizzoEmailIstituzionale()
                 );
 
-        // Assert.
-        assertTrue(risultato.isEmpty()); //testiamo che la lista restituita sia vuota
+        // Assert
+        assertTrue(
+                risultato.isEmpty(),
+                "Il risultato deve essere vuoto se il registro non contiene valutazioni"
+        );
     }
 
 
-    // CAMMINO 2
-    // START-1-2(T)-3(T)-4-5-6-7-8-9-2(F)-10-END
+
+    // TC2 - È presente una valutazione dello studente cercato
+    // Cammino: START - 1 - 2(T) - 3(T) - 4 - 5 - 6 - 7 - 8 - 9
+    //          - 2(F) - 10 - END
 
 
-    /**
-     * Nel Registro esiste una valutazione appartenente proprio allo
-     * Studente A. Il ramo vero dell'if viene percorso e il metodo costruisce
-     * la lista di stringhe contenente data, tipologia, voto e nota.
-     */
     @Test
     @DisplayName("TC2: Valutazione appartenente allo studente cercato")
     void cercaValutazioniStudente_EmailCorrispondente_RestituisceValutazione() {
 
-        // Arrange specifico: la valutazione è registrata per lo studente A
-        boolean registrata = registro.registraValutazione(
-                studenteA.getIndirizzoEmailIstituzionale(),
-                "INTERROGAZIONE",
-                7.25f,
-                LocalDate.of(2026, 10, 3),
-                "Buona prova"
+        // Arrange
+        //Precondizione: è presente una valutazione associata a studente A
+        Valutazione valutazioneStudenteA =
+                creaValutazione(studenteA);
+
+        registro.setValutazioniRegistratePerTest(
+                List.of(valutazioneStudenteA)
         );
 
-        //Non ha senso procedere se non riusciamo a impostare la precondizione
-        assertTrue(
-                registrata,
-                "La valutazione dello Studente A deve essere registrata per predisporre il test"
-        );
-
-        // Act.
+        // Act
         List<List<String>> risultato =
                 registro.cercaValutazioniStudente(
                         studenteA.getIndirizzoEmailIstituzionale()
                 );
 
-        // Assert: deve essere restituita esattamente la valutazione creata.
+        // Assert
+        //deve esserci una valutazione
+        assertEquals(
+                1,
+                risultato.size(),
+                "Deve essere restituita una sola valutazione"
+        );
 
-        //c'è solo la valutazione inserita da noi nella precondizione
-        assertEquals(1, risultato.size());
-
-        //deve essere esattamente la valutazione che abbiamo inserito
+        //deve essere esattamente quella inserita
         assertEquals(
                 List.of(
                         "2026-10-03",
@@ -211,49 +115,39 @@ class CercaValutazioniStudenteTest {
                         "7.25",
                         "Buona prova"
                 ),
-                risultato.get(0)
+                risultato.get(0),
+                "I dati della valutazione restituita devono coincidere con quelli registrati"
         );
     }
 
+    // TC3 - È presente una valutazione di uno studente diverso
+    // Cammino: START - 1 - 2(T) - 3(F) - 2(F) - 10 - END
 
-    // CAMMINO 3
-    // START-1-2(T)-3(F)-2(F)-10-END
 
-    /*
-     * Nel Registro esiste una valutazione, ma appartiene allo Studente B.
-     * Cercando lo Studente A, il ciclo viene eseguito una volta ma la
-     * condizione dell'if risulta falsa; la lista restituita resta vuota.
-     */
     @Test
-    @DisplayName("TC3: Valutazione appartenente a un altro studente")
+    @DisplayName("TC3: Valutazione appartenente a uno studente diverso")
     void cercaValutazioniStudente_EmailDiversa_RestituisceListaVuota() {
 
-        // Arrange specifico: la valutazione viene registrata per lo studente B
-        boolean registrata = registro.registraValutazione(
-                studenteB.getIndirizzoEmailIstituzionale(),
-                "INTERROGAZIONE",
-                7.25f,
-                LocalDate.of(2026, 10, 3),
-                "Buona prova"
+        // Arrange
+        //Precondizione: è presente una valutazione associata allo studente B
+        Valutazione valutazioneStudenteB =
+                creaValutazione(studenteB);
+
+        registro.setValutazioniRegistratePerTest(
+                List.of(valutazioneStudenteB)
         );
 
-        //Non ha senso procedere se non riusciamo a impostare la precondizione
-        assertTrue(
-                registrata,
-                "La valutazione dello Studente B deve essere registrata per predisporre il test"
-        );
-
-        // Act: viene cercato lo Studente A.
+        // Act
         List<List<String>> risultato =
                 registro.cercaValutazioniStudente(
                         studenteA.getIndirizzoEmailIstituzionale()
                 );
 
-        // Assert: la valutazione di B non deve comparire tra quelle di A. Quindi risultato deve essere vuoto.
-
-        assertTrue(risultato.isEmpty());
+        // Assert
+        assertTrue(
+                risultato.isEmpty(),
+                "Non devono essere restituite valutazioni appartenenti a un altro studente"
+        );
     }
-
-
 
 }
