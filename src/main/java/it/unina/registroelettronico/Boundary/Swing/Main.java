@@ -37,7 +37,7 @@ public class Main {
 
         SwingUtilities.invokeLater(() -> {
 
-            JFrame frame = new JFrame("Area Docente");
+            JFrame frame = new JFrame("Sistema Registro Elettronico");
 
             SchermataIniziale schermataIniziale = new SchermataIniziale();
             JPanel iniziale = schermataIniziale.getContentPane();
